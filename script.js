@@ -115,3 +115,12 @@ restartBtn.addEventListener("click", () => {
     currentQuestion = 0;
     showScreen(introScreen);
 });
+body {
+    animation: flicker 6s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+    52% { opacity: 1; }
+}
