@@ -178,3 +178,12 @@ button:hover {
     color: #cfcfff;
     margin-bottom: 30px;
 }
+body {
+    animation: flicker 6s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.98; }
+    52% { opacity: 1; }
+}
