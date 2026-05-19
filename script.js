@@ -1,156 +1,138 @@
-/* THIRD EYE - SCRIPT */
-
-const startBtn = document.getElementById("start-btn");
-const restartBtn = document.getElementById("restart-btn");
-
 const screens = document.querySelectorAll(".screen");
 
-const introScreen = document.getElementById("intro-screen");
-const questionScreen = document.getElementById("question-screen");
-const analysisScreen = document.getElementById("analysis-screen");
-const resultScreen = document.getElementById("result-screen");
+const intro = document.getElementById("intro");
+const quiz = document.getElementById("quiz");
+const loading = document.getElementById("loading");
+const result = document.getElementById("result");
 
-const questionText = document.getElementById("question-text");
-const answersContainer = document.getElementById("answers-container");
+const start = document.getElementById("start");
+const restart = document.getElementById("restart");
 
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const output = document.getElementById("output");
 
-/* QUESTIONS */
+let index = 0;
+
+let score = {
+    pink: 0,
+    red: 0,
+    memory: 0,
+    dream: 0,
+    self: 0
+};
 
 const questions = [
     {
-        q: "What color feels most comforting?",
-        a: ["Pink", "Red", "Black", "Blue"]
+        q: "What feels most comforting?",
+        o: ["Pink", "Red", "Dreams", "Memory"]
     },
     {
-        q: "What memory returns the most?",
-        a: ["Childhood", "A person", "A place", "A feeling"]
+        q: "What affects you most?",
+        o: ["Past", "People", "Myself", "Future"]
     },
     {
-        q: "What do you avoid thinking about?",
-        a: ["Past", "Future", "People", "Myself"]
-    },
-    {
-        q: "What feels more real to you?",
-        a: ["Dreams", "Reality", "Memories", "Imagination"]
+        q: "What feels more real?",
+        o: ["Dreams", "Reality", "Memories", "Nothing"]
     }
 ];
 
-let currentQuestion = 0;
-
-
-/* SCREEN SWITCH */
-
-function showScreen(screen) {
+function show(screen){
     screens.forEach(s => s.classList.remove("active"));
     screen.classList.add("active");
 }
 
+start.onclick = () => {
+    show(quiz);
+    load();
+};
 
-/* START */
+function load(){
 
-startBtn.addEventListener("click", () => {
-    showScreen(questionScreen);
-    loadQuestion();
-});
+    optionsEl.innerHTML = "";
 
+    let q = questions[index];
 
-/* LOAD QUESTION */
+    questionEl.innerText = q.q;
 
-function loadQuestion() {
+    q.o.forEach(opt => {
 
-    answersContainer.innerHTML = "";
+        let div = document.createElement("div");
+        div.classList.add("option");
+        div.innerText = opt;
 
-    let q = questions[currentQuestion];
+        div.onclick = () => {
 
-    questionText.innerText = q.q;
+            if(opt === "Pink") score.pink++;
+            if(opt === "Red") score.red++;
+            if(opt === "Dreams") score.dream++;
+            if(opt === "Memory") score.memory++;
+            if(opt === "Myself") score.self++;
 
-    q.a.forEach(answer => {
+            index++;
 
-        const btn = document.createElement("div");
-        btn.classList.add("answer-btn");
-        btn.innerText = answer;
-btn.addEventListener("click", () => {
+            if(index < questions.length){
+                load();
+            } else {
+                analyze();
+            }
 
-    let answer = btn.innerText;
+        };
 
-    // 🧠 TRACK SUBCONSCIOUS PATTERNS
-    if (answer === "Pink") score.pink++;
-    if (answer === "Red") score.red++;
-
-    if (answer === "A person") score.memory++;
-    if (answer === "Dreams") score.dream++;
-
-    // 👁️ MOVE NEXT
-    currentQuestion++;
-
-    if (currentQuestion < questions.length) {
-        loadQuestion();
-    } else {
-        showAnalysis();
-    }
-
-});
-
-        answersContainer.appendChild(btn);
+        optionsEl.appendChild(div);
 
     });
 
 }
 
+function analyze(){
 
-/* ANALYSIS */
-
-function showAnalysis() {
-
-    showScreen(analysisScreen);
+    show(loading);
 
     setTimeout(() => {
-        showResult();
+        final();
     }, 3000);
 
 }
 
+function final(){
 
-/* RESULT */
+    show(result);
 
-function showResult() {
+    let highest = "pink";
+    let max = score.pink;
 
-    let resultText = "";
-
-    if (score.pink > score.red) {
-        resultText =
-        "You say you moved on...\nBut your mind still returns to the original.";
+    for(let k in score){
+        if(score[k] > max){
+            max = score[k];
+            highest = k;
+        }
     }
 
-    else if (score.red > score.pink) {
-        resultText =
-        "You chose change.\nBut your patterns still echo the past.";
+    let text = "";
+
+    if(highest === "pink"){
+        text = "You think you moved on. But the original still defines you.";
+    }
+    else if(highest === "red"){
+        text = "You chose change. But your emotions still remember before.";
+    }
+    else if(highest === "dream"){
+        text = "You trust dreams more than reality.";
+    }
+    else if(highest === "memory"){
+        text = "You live more in memory than present.";
+    }
+    else{
+        text = "You are still searching for yourself.";
     }
 
-    else if (score.memory > score.dream) {
-        resultText =
-        "You live in memory more than reality.";
-    }
+    output.innerText = text;
 
-    else {
-        resultText =
-        "Your subconscious is fragmented.\nNothing is truly gone.";
-    }
-
-    document.getElementById("result-text").innerText = resultText;
-
-    showScreen(resultScreen);
 }
 
-/* RESTART */
-
-restartBtn.addEventListener("click", () => {
-    currentQuestion = 0;
-    showScreen(introScreen);
-});
-let score = {
-    pink: 0,
-    red: 0,
-    memory: 0,
-    dream: 0
+restart.onclick = () => {
+    index = 0;
+    score = {pink:0, red:0, memory:0, dream:0, self:0};
+    show(intro);
 };
