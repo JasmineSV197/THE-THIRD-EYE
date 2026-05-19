@@ -69,18 +69,27 @@ function loadQuestion() {
         const btn = document.createElement("div");
         btn.classList.add("answer-btn");
         btn.innerText = answer;
+btn.addEventListener("click", () => {
 
-        btn.addEventListener("click", () => {
+    let answer = btn.innerText;
 
-            currentQuestion++;
+    // 🧠 TRACK SUBCONSCIOUS PATTERNS
+    if (answer === "Pink") score.pink++;
+    if (answer === "Red") score.red++;
 
-            if (currentQuestion < questions.length) {
-                loadQuestion();
-            } else {
-                showAnalysis();
-            }
+    if (answer === "A person") score.memory++;
+    if (answer === "Dreams") score.dream++;
 
-        });
+    // 👁️ MOVE NEXT
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+        loadQuestion();
+    } else {
+        showAnalysis();
+    }
+
+});
 
         answersContainer.appendChild(btn);
 
@@ -105,9 +114,33 @@ function showAnalysis() {
 /* RESULT */
 
 function showResult() {
+
+    let resultText = "";
+
+    if (score.pink > score.red) {
+        resultText =
+        "You say you moved on...\nBut your mind still returns to the original.";
+    }
+
+    else if (score.red > score.pink) {
+        resultText =
+        "You chose change.\nBut your patterns still echo the past.";
+    }
+
+    else if (score.memory > score.dream) {
+        resultText =
+        "You live in memory more than reality.";
+    }
+
+    else {
+        resultText =
+        "Your subconscious is fragmented.\nNothing is truly gone.";
+    }
+
+    document.getElementById("result-text").innerText = resultText;
+
     showScreen(resultScreen);
 }
-
 
 /* RESTART */
 
@@ -115,12 +148,9 @@ restartBtn.addEventListener("click", () => {
     currentQuestion = 0;
     showScreen(introScreen);
 });
-body {
-    animation: flicker 6s infinite;
-}
-
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.98; }
-    52% { opacity: 1; }
-}
+let score = {
+    pink: 0,
+    red: 0,
+    memory: 0,
+    dream: 0
+};
