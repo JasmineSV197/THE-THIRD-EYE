@@ -29,46 +29,137 @@ document.getElementById("username");
 const characters = {
 
     Lisa: {
-        aesthetic: "Luxury black aesthetic",
-        trait: "Sharp confidence",
-        energy: "Powerful independence",
-        place: "City lights at midnight",
-        emotion: "Bold ambition",
-        animal: "Black Panther",
-        vibe: "Dark neon night"
+
+        attractive: "Confident and bold",
+        comfort: "Funny and energetic",
+        trust: "Honest and straightforward",
+        miss: "Constant excitement",
+        emotional: "Protective energy",
+        lovable: "Chaotic but caring",
+        energy: "Independent and fearless"
+
     },
 
     Jennie: {
-        aesthetic: "Soft elegant aesthetic",
-        trait: "Quiet charm",
-        energy: "Warm mystery",
-        place: "Soft sunset café",
-        emotion: "Emotional comfort",
-        animal: "Cat",
-        vibe: "Soft pastel evening"
+
+        attractive: "Calm and classy",
+        comfort: "Soft and understanding",
+        trust: "Quiet and reliable",
+        miss: "Warm emotional support",
+        emotional: "Deep understanding",
+        lovable: "Cold outside, soft inside",
+        energy: "Elegant and selective"
+
     },
 
     Rosé: {
-        aesthetic: "Soft vintage aesthetic",
-        trait: "Gentle sensitivity",
-        energy: "Dreamy emotion",
-        place: "Rainy window evening",
-        emotion: "Quiet attachment",
-        animal: "Swan",
-        vibe: "Emotional rainy night"
+
+        attractive: "Gentle and emotional",
+        comfort: "Sweet and comforting",
+        trust: "Sensitive and honest",
+        miss: "Emotional attention",
+        emotional: "Soft-hearted warmth",
+        lovable: "Cute and caring",
+        energy: "Dreamy and emotional"
+
     },
 
     Jisoo: {
-        aesthetic: "Classic royal aesthetic",
-        trait: "Warm elegance",
-        energy: "Calm confidence",
-        place: "Moonlight garden",
-        emotion: "Peaceful warmth",
-        animal: "Rabbit",
-        vibe: "Royal peaceful evening"
-    }
 
+        attractive: "Mature and calm",
+        comfort: "Peaceful and stable",
+        trust: "Patient and loyal",
+        miss: "Quiet presence",
+        emotional: "Safe and comforting",
+        lovable: "Funny in a calm way",
+        energy: "Warm and balanced"
+
+    }
+Jungkook: {
+
+    attractive: "Confident and intense",
+    comfort: "Playful and caring",
+    trust: "Protective and loyal",
+    miss: "Constant attention",
+    emotional: "Hidden emotional depth",
+    lovable: "Chaotic but sweet",
+    energy: "Fearless and passionate"
+
+},
+
+V: {
+
+    attractive: "Mysterious and artistic",
+    comfort: "Quiet and understanding",
+    trust: "Gentle and thoughtful",
+    miss: "Deep emotional presence",
+    emotional: "Warm hidden softness",
+    lovable: "Strange but lovable",
+    energy: "Dreamy and calm"
+
+},
+
+Jimin: {
+
+    attractive: "Charming and affectionate",
+    comfort: "Emotionally supportive",
+    trust: "Sensitive and caring",
+    miss: "Soft emotional warmth",
+    emotional: "Deep attachment",
+    lovable: "Cute and clingy",
+    energy: "Sweet and emotional"
+
+},
+
+RM: {
+
+    attractive: "Intelligent and calm",
+    comfort: "Mature understanding",
+    trust: "Wise and reliable",
+    miss: "Meaningful conversations",
+    emotional: "Quiet emotional support",
+    lovable: "Clumsy but caring",
+    energy: "Peaceful leadership"
+
+},
+
+Jin: {
+
+    attractive: "Funny and stable",
+    comfort: "Warm and protective",
+    trust: "Reliable and honest",
+    miss: "Comforting presence",
+    emotional: "Hidden sensitivity",
+    lovable: "Dad jokes and care",
+    energy: "Bright and comforting"
+
+},
+
+Suga: {
+
+    attractive: "Cold but caring",
+    comfort: "Silent understanding",
+    trust: "Straightforward honesty",
+    miss: "Quiet emotional safety",
+    emotional: "Deep hidden emotions",
+    lovable: "Savage but soft",
+    energy: "Calm and intense"
+
+},
+
+"J-Hope": {
+
+    attractive: "Positive and energetic",
+    comfort: "Bright emotional support",
+    trust: "Optimistic and loyal",
+    miss: "Happy energy",
+    emotional: "Pure-hearted warmth",
+    lovable: "Funny and affectionate",
+    energy: "Sunshine chaos"
+
+}
 };
+
 
 /* DYNAMIC QUESTIONS */
 
@@ -80,58 +171,58 @@ function getQuestions(){
     return [
 
         {
-            question: "Choose one.",
+            question: "What feels more attractive?",
             answers: [
-                { text: A.aesthetic, type: "A" },
-                { text: B.aesthetic, type: "B" }
+                { text: A.attractive, type: "A" },
+                { text: B.attractive, type: "B" }
             ]
         },
 
         {
-            question: "Which feels more attractive?",
+            question: "What feels more comforting?",
             answers: [
-                { text: A.trait, type: "A" },
-                { text: B.trait, type: "B" }
+                { text: A.comfort, type: "A" },
+                { text: B.comfort, type: "B" }
             ]
         },
 
         {
-            question: "Choose an energy.",
+            question: "What feels easier to trust?",
+            answers: [
+                { text: A.trust, type: "A" },
+                { text: B.trust, type: "B" }
+            ]
+        },
+
+        {
+            question: "What would you miss more?",
+            answers: [
+                { text: A.miss, type: "A" },
+                { text: B.miss, type: "B" }
+            ]
+        },
+
+        {
+            question: "What feels more emotionally close?",
+            answers: [
+                { text: A.emotional, type: "A" },
+                { text: B.emotional, type: "B" }
+            ]
+        },
+
+        {
+            question: "What feels more lovable?",
+            answers: [
+                { text: A.lovable, type: "A" },
+                { text: B.lovable, type: "B" }
+            ]
+        },
+
+        {
+            question: "What kind of energy do you naturally prefer?",
             answers: [
                 { text: A.energy, type: "A" },
                 { text: B.energy, type: "B" }
-            ]
-        },
-
-        {
-            question: "Choose a visual.",
-            answers: [
-                { text: A.place, type: "A" },
-                { text: B.place, type: "B" }
-            ]
-        },
-
-        {
-            question: "Which feels closer to you?",
-            answers: [
-                { text: A.emotion, type: "A" },
-                { text: B.emotion, type: "B" }
-            ]
-        },
-
-        {
-            question: "Choose one animal.",
-            answers: [
-                { text: A.animal, type: "A" },
-                { text: B.animal, type: "B" }
-            ]
-        },
-
-        {
-            question: "Which atmosphere feels stronger?",
-            answers: [
-                { text: A.vibe, type: "A" },
-                { text: B.vibe, type: "B" }
             ]
         },
 
