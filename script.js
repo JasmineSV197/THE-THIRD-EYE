@@ -212,44 +212,33 @@ function showResult(){
 
     let finalMessage = "";
 
-    /* CONTRADICTION */
-
     if(subconscious !== directChoice){
 
-        finalMessage = `
-
-${usernameInput.value},
-
-Conscious Choice:
-${directChoice}
-
-Subconscious Preference:
-${subconscious} — ${percent}%
-
-Contradiction detected.
-
-Your emotional pattern
-did not match your final answer.
-
-`;
+        finalMessage =
+        usernameInput.value +
+        "\n\nConscious Choice: " +
+        directChoice +
+        "\n\nSubconscious Preference: " +
+        subconscious +
+        " — " +
+        percent +
+        "%" +
+        "\n\nContradiction detected.\nYour emotional pattern did not match your final answer.";
 
     }
 
     else{
 
-        finalMessage = `
-
-${usernameInput.value},
-
-Conscious Choice:
-${directChoice}
-
-Subconscious Preference:
-${subconscious} — ${percent}%
-
-Your choices remained consistent.
-
-`;
+        finalMessage =
+        usernameInput.value +
+        "\n\nConscious Choice: " +
+        directChoice +
+        "\n\nSubconscious Preference: " +
+        subconscious +
+        " — " +
+        percent +
+        "%" +
+        "\n\nYour choices remained consistent.";
 
     }
 
