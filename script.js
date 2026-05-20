@@ -1,138 +1,277 @@
-const screens = document.querySelectorAll(".screen");
-
 const intro = document.getElementById("intro");
 const quiz = document.getElementById("quiz");
 const loading = document.getElementById("loading");
 const result = document.getElementById("result");
 
-const start = document.getElementById("start");
-const restart = document.getElementById("restart");
+const startBtn = document.getElementById("startBtn");
+const restartBtn = document.getElementById("restartBtn");
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const output = document.getElementById("output");
+const questionText = document.getElementById("questionText");
+const options = document.getElementById("options");
 
-let index = 0;
+const resultText = document.getElementById("resultText");
 
-let score = {
-    pink: 0,
-    red: 0,
-    memory: 0,
-    dream: 0,
-    self: 0
-};
+const usernameInput = document.getElementById("username");
+
+/* QUESTIONS */
 
 const questions = [
+
     {
-        q: "What feels most comforting?",
-        o: ["Pink", "Red", "Dreams", "Memory"]
+        question: "Choose one.",
+        answers: [
+            { text: "Luxury black aesthetic", type: "lisa" },
+            { text: "Soft elegant aesthetic", type: "jennie" }
+        ]
     },
+
     {
-        q: "What affects you most?",
-        o: ["Past", "People", "Myself", "Future"]
+        question: "Which feels more attractive?",
+        answers: [
+            { text: "Sharp confidence", type: "lisa" },
+            { text: "Quiet charm", type: "jennie" }
+        ]
     },
+
     {
-        q: "What feels more real?",
-        o: ["Dreams", "Reality", "Memories", "Nothing"]
+        question: "Choose an energy.",
+        answers: [
+            { text: "Powerful independence", type: "lisa" },
+            { text: "Warm mystery", type: "jennie" }
+        ]
+    },
+
+    {
+        question: "Choose a visual.",
+        answers: [
+            { text: "City lights at midnight", type: "lisa" },
+            { text: "Soft sunset café", type: "jennie" }
+        ]
+    },
+
+    {
+        question: "Which feels closer to you?",
+        answers: [
+            { text: "Bold ambition", type: "lisa" },
+            { text: "Emotional comfort", type: "jennie" }
+        ]
+    },
+
+    {
+        question: "Choose one animal.",
+        answers: [
+            { text: "Black Panther", type: "lisa" },
+            { text: "Cat", type: "jennie" }
+        ]
+    },
+
+    {
+        question: "Which atmosphere feels stronger?",
+        answers: [
+            { text: "Dark neon night", type: "lisa" },
+            { text: "Soft pastel evening", type: "jennie" }
+        ]
+    },
+
+    /* FINAL DIRECT QUESTION */
+
+    {
+        question: "Who do you like more?",
+        answers: [
+            { text: "Lisa", type: "lisaDirect" },
+            { text: "Jennie", type: "jennieDirect" }
+        ]
     }
+
 ];
 
-function show(screen){
-    screens.forEach(s => s.classList.remove("active"));
+let currentQuestion = 0;
+
+let score = {
+    lisa: 0,
+    jennie: 0
+};
+
+let directChoice = "";
+
+/* SCREEN SWITCH */
+
+function showScreen(screen){
+
+    [intro, quiz, loading, result]
+    .forEach(s => s.classList.remove("active"));
+
     screen.classList.add("active");
 }
 
-start.onclick = () => {
-    show(quiz);
-    load();
-};
+/* START */
 
-function load(){
+startBtn.addEventListener("click", () => {
 
-    optionsEl.innerHTML = "";
+    if(usernameInput.value.trim() === ""){
+        alert("Enter your name.");
+        return;
+    }
 
-    let q = questions[index];
+    showScreen(quiz);
 
-    questionEl.innerText = q.q;
+    loadQuestion();
 
-    q.o.forEach(opt => {
+});
 
-        let div = document.createElement("div");
+/* LOAD QUESTION */
+
+function loadQuestion(){
+
+    options.innerHTML = "";
+
+    let q = questions[currentQuestion];
+
+    questionText.innerText = q.question;
+
+    q.answers.forEach(answer => {
+
+        const div = document.createElement("div");
+
         div.classList.add("option");
-        div.innerText = opt;
 
-        div.onclick = () => {
+        div.innerText = answer.text;
 
-            if(opt === "Pink") score.pink++;
-            if(opt === "Red") score.red++;
-            if(opt === "Dreams") score.dream++;
-            if(opt === "Memory") score.memory++;
-            if(opt === "Myself") score.self++;
+        div.addEventListener("click", () => {
 
-            index++;
+            /* INDIRECT SCORING */
 
-            if(index < questions.length){
-                load();
-            } else {
-                analyze();
+            if(answer.type === "lisa"){
+                score.lisa++;
             }
 
-        };
+            if(answer.type === "jennie"){
+                score.jennie++;
+            }
 
-        optionsEl.appendChild(div);
+            /* DIRECT ANSWER */
+
+            if(answer.type === "lisaDirect"){
+                directChoice = "Lisa";
+            }
+
+            if(answer.type === "jennieDirect"){
+                directChoice = "Jennie";
+            }
+
+            currentQuestion++;
+
+            if(currentQuestion < questions.length){
+
+                loadQuestion();
+
+            } else {
+
+                analyze();
+
+            }
+
+        });
+
+        options.appendChild(div);
 
     });
 
 }
 
+/* ANALYSIS */
+
 function analyze(){
 
-    show(loading);
+    showScreen(loading);
 
     setTimeout(() => {
-        final();
+
+        showResult();
+
     }, 3000);
 
 }
 
-function final(){
+/* RESULT */
 
-    show(result);
+function showResult(){
 
-    let highest = "pink";
-    let max = score.pink;
+    showScreen(result);
 
-    for(let k in score){
-        if(score[k] > max){
-            max = score[k];
-            highest = k;
-        }
+    let subconscious =
+        score.lisa > score.jennie
+        ? "Lisa"
+        : "Jennie";
+
+    let highest =
+        Math.max(score.lisa, score.jennie);
+
+    let percent =
+        Math.round((highest / 7) * 100);
+
+    let finalMessage = "";
+
+    /* CONTRADICTION */
+
+    if(subconscious !== directChoice){
+
+        finalMessage = `
+
+${usernameInput.value},
+
+Conscious Choice:
+${directChoice}
+
+Subconscious Preference:
+${subconscious} — ${percent}%
+
+Contradiction detected.
+
+Your emotional pattern
+did not match your final answer.
+
+`;
+
     }
 
-    let text = "";
-
-    if(highest === "pink"){
-        text = "You think you moved on. But the original still defines you.";
-    }
-    else if(highest === "red"){
-        text = "You chose change. But your emotions still remember before.";
-    }
-    else if(highest === "dream"){
-        text = "You trust dreams more than reality.";
-    }
-    else if(highest === "memory"){
-        text = "You live more in memory than present.";
-    }
     else{
-        text = "You are still searching for yourself.";
+
+        finalMessage = `
+
+${usernameInput.value},
+
+Conscious Choice:
+${directChoice}
+
+Subconscious Preference:
+${subconscious} — ${percent}%
+
+Your choices remained consistent.
+
+`;
+
     }
 
-    output.innerText = text;
+    resultText.innerText = finalMessage;
 
 }
 
-restart.onclick = () => {
-    index = 0;
-    score = {pink:0, red:0, memory:0, dream:0, self:0};
-    show(intro);
-};
+/* RESTART */
+
+restartBtn.addEventListener("click", () => {
+
+    currentQuestion = 0;
+
+    score = {
+        lisa: 0,
+        jennie: 0
+    };
+
+    directChoice = "";
+
+    usernameInput.value = "";
+
+    showScreen(intro);
+
+});
