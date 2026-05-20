@@ -2,108 +2,167 @@ const intro = document.getElementById("intro");
 const quiz = document.getElementById("quiz");
 const loading = document.getElementById("loading");
 const result = document.getElementById("result");
+
 const pairSelect = document.getElementById("pairSelect");
 const continueBtn = document.getElementById("continueBtn");
 
 const pairOptions =
 document.querySelectorAll(".pairOption");
+
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 
-const questionText = document.getElementById("questionText");
-const options = document.getElementById("options");
+const questionText =
+document.getElementById("questionText");
 
-const resultText = document.getElementById("resultText");
+const options =
+document.getElementById("options");
 
-const usernameInput = document.getElementById("username");
+const resultText =
+document.getElementById("resultText");
 
-/* QUESTIONS */
+const usernameInput =
+document.getElementById("username");
 
-const questions = [
+/* CHARACTER DATA */
 
-    {
-        question: "Choose one.",
-        answers: [
-            { text: "Luxury black aesthetic", type: "lisa" },
-            { text: "Soft elegant aesthetic", type: "jennie" }
-        ]
+const characters = {
+
+    Lisa: {
+        aesthetic: "Luxury black aesthetic",
+        trait: "Sharp confidence",
+        energy: "Powerful independence",
+        place: "City lights at midnight",
+        emotion: "Bold ambition",
+        animal: "Black Panther",
+        vibe: "Dark neon night"
     },
 
-    {
-        question: "Which feels more attractive?",
-        answers: [
-            { text: "Sharp confidence", type: "lisa" },
-            { text: "Quiet charm", type: "jennie" }
-        ]
+    Jennie: {
+        aesthetic: "Soft elegant aesthetic",
+        trait: "Quiet charm",
+        energy: "Warm mystery",
+        place: "Soft sunset café",
+        emotion: "Emotional comfort",
+        animal: "Cat",
+        vibe: "Soft pastel evening"
     },
 
-    {
-        question: "Choose an energy.",
-        answers: [
-            { text: "Powerful independence", type: "lisa" },
-            { text: "Warm mystery", type: "jennie" }
-        ]
+    Rosé: {
+        aesthetic: "Soft vintage aesthetic",
+        trait: "Gentle sensitivity",
+        energy: "Dreamy emotion",
+        place: "Rainy window evening",
+        emotion: "Quiet attachment",
+        animal: "Swan",
+        vibe: "Emotional rainy night"
     },
 
-    {
-        question: "Choose a visual.",
-        answers: [
-            { text: "City lights at midnight", type: "lisa" },
-            { text: "Soft sunset café", type: "jennie" }
-        ]
-    },
-
-    {
-        question: "Which feels closer to you?",
-        answers: [
-            { text: "Bold ambition", type: "lisa" },
-            { text: "Emotional comfort", type: "jennie" }
-        ]
-    },
-
-    {
-        question: "Choose one animal.",
-        answers: [
-            { text: "Black Panther", type: "lisa" },
-            { text: "Cat", type: "jennie" }
-        ]
-    },
-
-    {
-        question: "Which atmosphere feels stronger?",
-        answers: [
-            { text: "Dark neon night", type: "lisa" },
-            { text: "Soft pastel evening", type: "jennie" }
-        ]
-    },
-
-    /* FINAL DIRECT QUESTION */
-
-    {
-        question: "Who do you like more?",
-        answers: [
-            { text: "Lisa", type: "lisaDirect" },
-            { text: "Jennie", type: "jennieDirect" }
-        ]
+    Jisoo: {
+        aesthetic: "Classic royal aesthetic",
+        trait: "Warm elegance",
+        energy: "Calm confidence",
+        place: "Moonlight garden",
+        emotion: "Peaceful warmth",
+        animal: "Rabbit",
+        vibe: "Royal peaceful evening"
     }
 
-];
+};
+
+/* DYNAMIC QUESTIONS */
+
+function getQuestions(){
+
+    const A = characters[selectedPair[0]];
+    const B = characters[selectedPair[1]];
+
+    return [
+
+        {
+            question: "Choose one.",
+            answers: [
+                { text: A.aesthetic, type: "A" },
+                { text: B.aesthetic, type: "B" }
+            ]
+        },
+
+        {
+            question: "Which feels more attractive?",
+            answers: [
+                { text: A.trait, type: "A" },
+                { text: B.trait, type: "B" }
+            ]
+        },
+
+        {
+            question: "Choose an energy.",
+            answers: [
+                { text: A.energy, type: "A" },
+                { text: B.energy, type: "B" }
+            ]
+        },
+
+        {
+            question: "Choose a visual.",
+            answers: [
+                { text: A.place, type: "A" },
+                { text: B.place, type: "B" }
+            ]
+        },
+
+        {
+            question: "Which feels closer to you?",
+            answers: [
+                { text: A.emotion, type: "A" },
+                { text: B.emotion, type: "B" }
+            ]
+        },
+
+        {
+            question: "Choose one animal.",
+            answers: [
+                { text: A.animal, type: "A" },
+                { text: B.animal, type: "B" }
+            ]
+        },
+
+        {
+            question: "Which atmosphere feels stronger?",
+            answers: [
+                { text: A.vibe, type: "A" },
+                { text: B.vibe, type: "B" }
+            ]
+        },
+
+        {
+            question: "Who do you like more?",
+            answers: [
+                { text: selectedPair[0], type: "ADirect" },
+                { text: selectedPair[1], type: "BDirect" }
+            ]
+        }
+
+    ];
+
+}
 
 let currentQuestion = 0;
 
 let score = {
-    lisa: 0,
-    jennie: 0
+    A: 0,
+    B: 0
 };
 
 let directChoice = "";
+
 let selectedPair = [];
 
 /* SCREEN SWITCH */
 
 function showScreen(screen){
 
-   [intro, pairSelect, quiz, loading, result]
+    [intro, pairSelect, quiz, loading, result]
     .forEach(s => s.classList.remove("active"));
 
     screen.classList.add("active");
@@ -121,6 +180,9 @@ startBtn.addEventListener("click", () => {
     showScreen(pairSelect);
 
 });
+
+/* PAIR SELECT */
+
 pairOptions.forEach(option => {
 
     option.addEventListener("click", () => {
@@ -152,6 +214,8 @@ pairOptions.forEach(option => {
 
 });
 
+/* CONTINUE */
+
 continueBtn.addEventListener("click", () => {
 
     if(selectedPair.length !== 2){
@@ -172,47 +236,55 @@ function loadQuestion(){
 
     options.innerHTML = "";
 
-    let q = questions[currentQuestion];
+    let q =
+    getQuestions()[currentQuestion];
 
-    questionText.innerText = q.question;
+    questionText.innerText =
+    q.question;
 
     q.answers.forEach(answer => {
 
-        const div = document.createElement("div");
+        const div =
+        document.createElement("div");
 
         div.classList.add("option");
 
-        div.innerText = answer.text;
+        div.innerText =
+        answer.text;
 
         div.addEventListener("click", () => {
 
-            /* INDIRECT SCORING */
+            /* INDIRECT */
 
-            if(answer.type === "lisa"){
-                score.lisa++;
+            if(answer.type === "A"){
+                score.A++;
             }
 
-            if(answer.type === "jennie"){
-                score.jennie++;
+            if(answer.type === "B"){
+                score.B++;
             }
 
-            /* DIRECT ANSWER */
+            /* DIRECT */
 
-            if(answer.type === "lisaDirect"){
-                directChoice = "Lisa";
+            if(answer.type === "ADirect"){
+                directChoice =
+                selectedPair[0];
             }
 
-            if(answer.type === "jennieDirect"){
-                directChoice = "Jennie";
+            if(answer.type === "BDirect"){
+                directChoice =
+                selectedPair[1];
             }
 
             currentQuestion++;
 
-            if(currentQuestion < questions.length){
+            if(currentQuestion < 8){
 
                 loadQuestion();
 
-            } else {
+            }
+
+            else{
 
                 analyze();
 
@@ -247,29 +319,38 @@ function showResult(){
     showScreen(result);
 
     let subconscious =
-        score.lisa > score.jennie
-        ? "Lisa"
-        : "Jennie";
+    score.A > score.B
+    ? selectedPair[0]
+    : selectedPair[1];
 
     let highest =
-        Math.max(score.lisa, score.jennie);
+    Math.max(score.A, score.B);
 
     let percent =
-        Math.round((highest / 7) * 100);
+    Math.round((highest / 7) * 100);
 
     let finalMessage = "";
 
     if(subconscious !== directChoice){
 
         finalMessage =
+
         usernameInput.value +
+
         "\n\nConscious Choice: " +
+
         directChoice +
+
         "\n\nSubconscious Preference: " +
+
         subconscious +
+
         " — " +
+
         percent +
+
         "%" +
+
         "\n\nContradiction detected.\nYour emotional pattern did not match your final answer.";
 
     }
@@ -277,19 +358,29 @@ function showResult(){
     else{
 
         finalMessage =
+
         usernameInput.value +
+
         "\n\nConscious Choice: " +
+
         directChoice +
+
         "\n\nSubconscious Preference: " +
+
         subconscious +
+
         " — " +
+
         percent +
+
         "%" +
+
         "\n\nYour choices remained consistent.";
 
     }
 
-    resultText.innerText = finalMessage;
+    resultText.innerText =
+    finalMessage;
 
 }
 
@@ -300,11 +391,19 @@ restartBtn.addEventListener("click", () => {
     currentQuestion = 0;
 
     score = {
-        lisa: 0,
-        jennie: 0
+        A: 0,
+        B: 0
     };
 
     directChoice = "";
+
+    selectedPair = [];
+
+    document
+    .querySelectorAll(".pairOption")
+    .forEach(option => {
+        option.classList.remove("selected");
+    });
 
     usernameInput.value = "";
 
