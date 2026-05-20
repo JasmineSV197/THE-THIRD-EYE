@@ -6,7 +6,14 @@ const result = document.getElementById("result");
 const pairSelect = document.getElementById("pairSelect");
 const continueBtn = document.getElementById("continueBtn");
 
-let pairOptions;
+const pairButtons =
+document.getElementById("pairButtons");
+
+const groupTitle =
+document.getElementById("groupTitle");
+
+const extraResult =
+document.getElementById("extraResult");
 
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
@@ -23,150 +30,269 @@ document.getElementById("resultText");
 const usernameInput =
 document.getElementById("username");
 
-/* CHARACTER DATA */
+/* GROUP DATA */
 
-const characters = {
+const groups = {
 
-    Lisa: {
+    BLACKPINK: {
 
-        attractive: "Confident and bold",
-        comfort: "Funny and energetic",
-        trust: "Honest and straightforward",
-        miss: "Constant excitement",
-        emotional: "Protective energy",
-        lovable: "Chaotic but caring",
-        energy: "Independent and fearless"
+        Lisa: {
 
-    },
+            attractive: "Confident and bold",
+            comfort: "Funny and energetic",
+            trust: "Honest and straightforward",
+            miss: "Constant excitement",
+            emotional: "Protective energy",
+            lovable: "Chaotic but caring",
+            energy: "Independent and fearless"
 
-    Jennie: {
+        },
 
-        attractive: "Calm and classy",
-        comfort: "Soft and understanding",
-        trust: "Quiet and reliable",
-        miss: "Warm emotional support",
-        emotional: "Deep understanding",
-        lovable: "Cold outside, soft inside",
-        energy: "Elegant and selective"
+        Jennie: {
 
-    },
+            attractive: "Calm and classy",
+            comfort: "Soft and understanding",
+            trust: "Quiet and reliable",
+            miss: "Warm emotional support",
+            emotional: "Deep understanding",
+            lovable: "Cold outside, soft inside",
+            energy: "Elegant and selective"
 
-    Rosé: {
+        },
 
-        attractive: "Gentle and emotional",
-        comfort: "Sweet and comforting",
-        trust: "Sensitive and honest",
-        miss: "Emotional attention",
-        emotional: "Soft-hearted warmth",
-        lovable: "Cute and caring",
-        energy: "Dreamy and emotional"
+        Rosé: {
 
-    },
+            attractive: "Gentle and emotional",
+            comfort: "Sweet and comforting",
+            trust: "Sensitive and honest",
+            miss: "Emotional attention",
+            emotional: "Soft-hearted warmth",
+            lovable: "Cute and caring",
+            energy: "Dreamy and emotional"
 
-    Jisoo: {
+        },
 
-        attractive: "Mature and calm",
-        comfort: "Peaceful and stable",
-        trust: "Patient and loyal",
-        miss: "Quiet presence",
-        emotional: "Safe and comforting",
-        lovable: "Funny in a calm way",
-        energy: "Warm and balanced"
+        Jisoo: {
 
-    },
+            attractive: "Mature and calm",
+            comfort: "Peaceful and stable",
+            trust: "Patient and loyal",
+            miss: "Quiet presence",
+            emotional: "Safe and comforting",
+            lovable: "Funny in a calm way",
+            energy: "Warm and balanced"
 
-    Jungkook: {
-
-        attractive: "Confident and intense",
-        comfort: "Playful and caring",
-        trust: "Protective and loyal",
-        miss: "Constant attention",
-        emotional: "Hidden emotional depth",
-        lovable: "Chaotic but sweet",
-        energy: "Fearless and passionate"
+        }
 
     },
 
-    V: {
+    BTS: {
 
-        attractive: "Mysterious and artistic",
-        comfort: "Quiet and understanding",
-        trust: "Gentle and thoughtful",
-        miss: "Deep emotional presence",
-        emotional: "Warm hidden softness",
-        lovable: "Strange but lovable",
-        energy: "Dreamy and calm"
+        Jungkook: {
 
-    },
+            attractive: "Confident and intense",
+            comfort: "Playful and caring",
+            trust: "Protective and loyal",
+            miss: "Constant attention",
+            emotional: "Hidden emotional depth",
+            lovable: "Chaotic but sweet",
+            energy: "Fearless and passionate"
 
-    Jimin: {
+        },
 
-        attractive: "Charming and affectionate",
-        comfort: "Emotionally supportive",
-        trust: "Sensitive and caring",
-        miss: "Soft emotional warmth",
-        emotional: "Deep attachment",
-        lovable: "Cute and clingy",
-        energy: "Sweet and emotional"
+        V: {
 
-    },
+            attractive: "Mysterious and artistic",
+            comfort: "Quiet and understanding",
+            trust: "Gentle and thoughtful",
+            miss: "Deep emotional presence",
+            emotional: "Warm hidden softness",
+            lovable: "Strange but lovable",
+            energy: "Dreamy and calm"
 
-    RM: {
+        },
 
-        attractive: "Intelligent and calm",
-        comfort: "Mature understanding",
-        trust: "Wise and reliable",
-        miss: "Meaningful conversations",
-        emotional: "Quiet emotional support",
-        lovable: "Clumsy but caring",
-        energy: "Peaceful leadership"
+        Jimin: {
 
-    },
+            attractive: "Charming and affectionate",
+            comfort: "Emotionally supportive",
+            trust: "Sensitive and caring",
+            miss: "Soft emotional warmth",
+            emotional: "Deep attachment",
+            lovable: "Cute and clingy",
+            energy: "Sweet and emotional"
 
-    Jin: {
+        },
 
-        attractive: "Funny and stable",
-        comfort: "Warm and protective",
-        trust: "Reliable and honest",
-        miss: "Comforting presence",
-        emotional: "Hidden sensitivity",
-        lovable: "Dad jokes and care",
-        energy: "Bright and comforting"
+        RM: {
 
-    },
+            attractive: "Intelligent and calm",
+            comfort: "Mature understanding",
+            trust: "Wise and reliable",
+            miss: "Meaningful conversations",
+            emotional: "Quiet emotional support",
+            lovable: "Clumsy but caring",
+            energy: "Peaceful leadership"
 
-    Suga: {
+        },
 
-        attractive: "Cold but caring",
-        comfort: "Silent understanding",
-        trust: "Straightforward honesty",
-        miss: "Quiet emotional safety",
-        emotional: "Deep hidden emotions",
-        lovable: "Savage but soft",
-        energy: "Calm and intense"
+        Jin: {
 
-    },
+            attractive: "Funny and stable",
+            comfort: "Warm and protective",
+            trust: "Reliable and honest",
+            miss: "Comforting presence",
+            emotional: "Hidden sensitivity",
+            lovable: "Dad jokes and care",
+            energy: "Bright and comforting"
 
-    "J-Hope": {
+        },
 
-        attractive: "Positive and energetic",
-        comfort: "Bright emotional support",
-        trust: "Optimistic and loyal",
-        miss: "Happy energy",
-        emotional: "Pure-hearted warmth",
-        lovable: "Funny and affectionate",
-        energy: "Sunshine chaos"
+        Suga: {
+
+            attractive: "Cold but caring",
+            comfort: "Silent understanding",
+            trust: "Straightforward honesty",
+            miss: "Quiet emotional safety",
+            emotional: "Deep hidden emotions",
+            lovable: "Savage but soft",
+            energy: "Calm and intense"
+
+        },
+
+        "J-Hope": {
+
+            attractive: "Positive and energetic",
+            comfort: "Bright emotional support",
+            trust: "Optimistic and loyal",
+            miss: "Happy energy",
+            emotional: "Pure-hearted warmth",
+            lovable: "Funny and affectionate",
+            energy: "Sunshine chaos"
+
+        }
 
     }
 
 };
 
-/* DYNAMIC QUESTIONS */
+/* VARIABLES */
+
+let currentQuestion = 0;
+
+let score = {
+    A: 0,
+    B: 0
+};
+
+let directChoice = "";
+
+let selectedPair = [];
+
+let selectedGroup = "";
+
+/* GENERATE BUTTONS */
+
+function generateButtons(){
+
+    pairButtons.innerHTML = "";
+
+    for(let group in groups){
+
+        const title =
+        document.createElement("h3");
+
+        title.classList.add("groupName");
+
+        title.innerText = group;
+
+        pairButtons.appendChild(title);
+
+        for(let idol in groups[group]){
+
+            const div =
+            document.createElement("div");
+
+            div.classList.add("pairOption");
+
+            div.setAttribute("data-group", group);
+
+            div.setAttribute("data-name", idol);
+
+            div.innerText = idol;
+
+            div.addEventListener("click", () => {
+
+                selectOption(div);
+
+            });
+
+            pairButtons.appendChild(div);
+
+        }
+
+    }
+
+}
+
+/* OPTION SELECT */
+
+function selectOption(option){
+
+    const name =
+    option.getAttribute("data-name");
+
+    const group =
+    option.getAttribute("data-group");
+
+    if(selectedPair.includes(name)){
+
+        selectedPair =
+        selectedPair.filter(n => n !== name);
+
+        option.classList.remove("selected");
+
+        if(selectedPair.length === 0){
+            selectedGroup = "";
+        }
+
+        return;
+
+    }
+
+    if(selectedPair.length === 0){
+
+        selectedGroup = group;
+
+    }
+
+    if(group !== selectedGroup){
+
+        alert("Choose only from same group.");
+
+        return;
+
+    }
+
+    if(selectedPair.length < 2){
+
+        selectedPair.push(name);
+
+        option.classList.add("selected");
+
+    }
+
+}
+
+/* QUESTIONS */
 
 function getQuestions(){
 
-    const A = characters[selectedPair[0]];
-    const B = characters[selectedPair[1]];
+    const A =
+    groups[selectedGroup][selectedPair[0]];
+
+    const B =
+    groups[selectedGroup][selectedPair[1]];
 
     return [
 
@@ -238,17 +364,6 @@ function getQuestions(){
 
 }
 
-let currentQuestion = 0;
-
-let score = {
-    A: 0,
-    B: 0
-};
-
-let directChoice = "";
-
-let selectedPair = [];
-
 /* SCREEN SWITCH */
 
 function showScreen(screen){
@@ -260,55 +375,19 @@ function showScreen(screen){
 
 }
 
-/* LOAD PAIR OPTIONS */
-
-pairOptions =
-document.querySelectorAll(".pairOption");
-
 /* START */
 
 startBtn.addEventListener("click", () => {
 
     if(usernameInput.value.trim() === ""){
+
         alert("Enter your name.");
+
         return;
+
     }
 
     showScreen(pairSelect);
-
-});
-
-/* PAIR SELECT */
-
-pairOptions.forEach(option => {
-
-    option.addEventListener("click", () => {
-
-        const name =
-        option.getAttribute("data-name");
-
-        if(selectedPair.includes(name)){
-
-            selectedPair =
-            selectedPair.filter(n => n !== name);
-
-            option.classList.remove("selected");
-
-        }
-
-        else{
-
-            if(selectedPair.length < 2){
-
-                selectedPair.push(name);
-
-                option.classList.add("selected");
-
-            }
-
-        }
-
-    });
 
 });
 
@@ -319,9 +398,13 @@ continueBtn.addEventListener("click", () => {
     if(selectedPair.length !== 2){
 
         alert("Choose exactly 2.");
+
         return;
 
     }
+
+    groupTitle.innerText =
+    selectedGroup;
 
     showScreen(quiz);
 
@@ -421,6 +504,11 @@ function showResult(){
     ? selectedPair[0]
     : selectedPair[1];
 
+    let indirectPreference =
+    score.A > score.B
+    ? selectedPair[0]
+    : selectedPair[1];
+
     let difference =
     Math.abs(score.A - score.B);
 
@@ -484,6 +572,14 @@ function showResult(){
     resultText.innerText =
     finalMessage;
 
+    extraResult.innerHTML =
+
+    "<br><b>Most Indirectly Preferred:</b> "
+    + indirectPreference +
+
+    "<br><br><b>Subconscious Match:</b> "
+    + subconscious;
+
 }
 
 /* RESTART */
@@ -501,16 +597,18 @@ restartBtn.addEventListener("click", () => {
 
     selectedPair = [];
 
-    document
-    .querySelectorAll(".pairOption")
-    .forEach(option => {
-
-        option.classList.remove("selected");
-
-    });
+    selectedGroup = "";
 
     usernameInput.value = "";
 
+    extraResult.innerHTML = "";
+
     showScreen(intro);
 
+    generateButtons();
+
 });
+
+/* INIT */
+
+generateButtons();
