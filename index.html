@@ -2,54 +2,91 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>THIRD EYE</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
+    <div class="container">
 
-<div class="container">
+        <!-- INTRO -->
+        <section id="intro" class="screen active">
 
-    <!-- INTRO -->
-    <section class="screen active" id="intro">
-        <h1>THIRD EYE</h1>
-        <p>The subconscious remembers.</p>
-        <button id="start">ENTER</button>
-    </section>
+            <h1>THIRD EYE</h1>
 
-    <!-- QUESTIONS -->
-    <section class="screen" id="quiz">
+            <p class="tagline">
+                The subconscious remembers.
+            </p>
 
-        <div class="card">
-            <p id="question">Question</p>
-            <div id="options"></div>
-        </div>
+            <input type="text" id="username" placeholder="Enter your name">
 
-    </section>
+            <button id="startBtn">
+                ENTER
+            </button>
 
-    <!-- ANALYSIS -->
-    <section class="screen" id="loading">
-        <h2>Analyzing subconscious...</h2>
-        <div class="loader"></div>
-    </section>
+        </section>
 
-    <!-- RESULT -->
-    <section class="screen" id="result">
-        <h2>RESULT</h2>
-        <p id="output"></p>
-        <button id="restart">Restart</button>
-    </section>
 
-</div>
+        <!-- QUIZ -->
+        <section id="quiz" class="screen">
 
-<script src="script.js"></script>
+            <div class="questionBox">
+
+                <h2 id="questionText">
+                    Question
+                </h2>
+
+                <div id="options">
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOADING -->
+        <section id="loading" class="screen">
+
+            <h2>
+                Analyzing subconscious patterns...
+            </h2>
+
+            <div class="loader"></div>
+
+        </section>
+
+
+        <!-- RESULT -->
+        <section id="result" class="screen">
+
+            <h2>
+                ANALYSIS COMPLETE
+            </h2>
+
+            <p id="resultText">
+
+            </p>
+
+            <button id="restartBtn">
+                Restart
+            </button>
+
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
