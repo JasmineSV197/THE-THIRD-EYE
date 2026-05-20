@@ -109,37 +109,77 @@ const groups = {
 
     BTS: {
 
-        Jungkook: {
-            attractive: "Confident and intense",
-            comfort: "Playful and caring",
-            trust: "Protective and loyal",
-            miss: "Constant attention",
-            emotional: "Hidden emotional depth",
-            lovable: "Chaotic but sweet",
-            energy: "Fearless and passionate"
-        },
+    Jungkook: {
+        attractive: "Confident and intense",
+        comfort: "Playful and caring",
+        trust: "Protective and loyal",
+        miss: "Constant attention",
+        emotional: "Hidden emotional depth",
+        lovable: "Chaotic but sweet",
+        energy: "Fearless and passionate"
+    },
 
-        V: {
-            attractive: "Mysterious and artistic",
-            comfort: "Quiet and understanding",
-            trust: "Gentle and thoughtful",
-            miss: "Deep emotional presence",
-            emotional: "Warm hidden softness",
-            lovable: "Strange but lovable",
-            energy: "Dreamy and calm"
-        },
+    V: {
+        attractive: "Mysterious and artistic",
+        comfort: "Quiet and understanding",
+        trust: "Gentle and thoughtful",
+        miss: "Deep emotional presence",
+        emotional: "Warm hidden softness",
+        lovable: "Strange but lovable",
+        energy: "Dreamy and calm"
+    },
 
-        Jimin: {
-            attractive: "Charming and affectionate",
-            comfort: "Emotionally supportive",
-            trust: "Sensitive and caring",
-            miss: "Soft emotional warmth",
-            emotional: "Deep attachment",
-            lovable: "Cute and clingy",
-            energy: "Sweet and emotional"
-        }
+    Jimin: {
+        attractive: "Charming and affectionate",
+        comfort: "Emotionally supportive",
+        trust: "Sensitive and caring",
+        miss: "Soft emotional warmth",
+        emotional: "Deep attachment",
+        lovable: "Cute and clingy",
+        energy: "Sweet and emotional"
+    },
 
+    RM: {
+        attractive: "Intelligent and calm",
+        comfort: "Mature understanding",
+        trust: "Wise and reliable",
+        miss: "Meaningful conversations",
+        emotional: "Quiet emotional support",
+        lovable: "Clumsy but caring",
+        energy: "Peaceful leadership"
+    },
+
+    Jin: {
+        attractive: "Funny and stable",
+        comfort: "Warm and protective",
+        trust: "Reliable and honest",
+        miss: "Comforting presence",
+        emotional: "Hidden sensitivity",
+        lovable: "Dad jokes and care",
+        energy: "Bright and comforting"
+    },
+
+    Suga: {
+        attractive: "Cold but caring",
+        comfort: "Silent understanding",
+        trust: "Straightforward honesty",
+        miss: "Quiet emotional safety",
+        emotional: "Deep hidden emotions",
+        lovable: "Savage but soft",
+        energy: "Calm and intense"
+    },
+
+    "J-Hope": {
+        attractive: "Positive and energetic",
+        comfort: "Bright emotional support",
+        trust: "Optimistic and loyal",
+        miss: "Happy energy",
+        emotional: "Pure-hearted warmth",
+        lovable: "Funny and affectionate",
+        energy: "Sunshine chaos"
     }
+
+}
 
 };
 
@@ -249,10 +289,8 @@ groupContinueBtn.addEventListener("click", () => {
 
 groupModeBtn.addEventListener("click", () => {
 
-    mode = "group";
-
     alert(
-        "Group comparison coming soon."
+        "Group comparison mode will unlock in next update 👁️"
     );
 
 });
