@@ -4,13 +4,16 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
     <title>THIRD EYE</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet">
 
 </head>
 
@@ -19,7 +22,9 @@
     <div class="container">
 
         <!-- INTRO -->
-        <section id="intro" class="screen active">
+
+        <section id="intro"
+        class="screen active">
 
             <h1>THIRD EYE</h1>
 
@@ -27,7 +32,10 @@
                 The subconscious remembers.
             </p>
 
-            <input type="text" id="username" placeholder="Enter your name">
+            <input
+            type="text"
+            id="username"
+            placeholder="Enter your name">
 
             <button id="startBtn">
                 ENTER
@@ -37,72 +45,40 @@
 
 
 
-        <!-- QUIZ -->
         <!-- PAIR SELECT -->
 
-<section id="pairSelect" class="screen">
+        <section id="pairSelect"
+        class="screen">
 
-    <h2 class="pairTitle">
-        Choose Two
-    </h2>
+            <h2 class="pairTitle">
+                Choose Two
+            </h2>
 
-<div class="pairButtons">
+            <!-- GROUP TITLE -->
 
-    <!-- BLACKPINK -->
+            <div id="groupTitle">
 
-    <div class="pairOption" data-name="Lisa">
-        Lisa
-    </div>
+            </div>
 
-    <div class="pairOption" data-name="Jennie">
-        Jennie
-    </div>
+            <!-- AUTO GENERATED BUTTONS -->
 
-    <div class="pairOption" data-name="Rosé">
-        Rosé
-    </div>
+            <div class="pairButtons"
+            id="pairButtons">
 
-    <div class="pairOption" data-name="Jisoo">
-        Jisoo
-    </div>
+            </div>
 
-    <!-- BTS -->
+            <button id="continueBtn">
+                CONTINUE
+            </button>
 
-    <div class="pairOption" data-name="Jungkook">
-        Jungkook
-    </div>
+        </section>
 
-    <div class="pairOption" data-name="V">
-        V
-    </div>
 
-    <div class="pairOption" data-name="Jimin">
-        Jimin
-    </div>
 
-    <div class="pairOption" data-name="RM">
-        RM
-    </div>
+        <!-- QUIZ -->
 
-    <div class="pairOption" data-name="Jin">
-        Jin
-    </div>
-
-    <div class="pairOption" data-name="Suga">
-        Suga
-    </div>
-
-    <div class="pairOption" data-name="J-Hope">
-        J-Hope
-    </div>
-
-</div>
-    <button id="continueBtn">
-        CONTINUE
-    </button>
-
-</section>
-        <section id="quiz" class="screen">
+        <section id="quiz"
+        class="screen">
 
             <div class="questionBox">
 
@@ -119,8 +95,11 @@
         </section>
 
 
+
         <!-- LOADING -->
-        <section id="loading" class="screen">
+
+        <section id="loading"
+        class="screen">
 
             <h2>
                 Analyzing subconscious patterns...
@@ -131,8 +110,11 @@
         </section>
 
 
+
         <!-- RESULT -->
-        <section id="result" class="screen">
+
+        <section id="result"
+        class="screen">
 
             <h2>
                 ANALYSIS COMPLETE
@@ -141,6 +123,12 @@
             <p id="resultText">
 
             </p>
+
+            <!-- EXTRA RESULT -->
+
+            <div id="extraResult">
+
+            </div>
 
             <button id="restartBtn">
                 Restart
