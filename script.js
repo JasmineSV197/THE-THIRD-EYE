@@ -2,7 +2,11 @@ const intro = document.getElementById("intro");
 const quiz = document.getElementById("quiz");
 const loading = document.getElementById("loading");
 const result = document.getElementById("result");
+const pairSelect = document.getElementById("pairSelect");
+const continueBtn = document.getElementById("continueBtn");
 
+const pairOptions =
+document.querySelectorAll(".pairOption");
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
 
@@ -93,12 +97,13 @@ let score = {
 };
 
 let directChoice = "";
+let selectedPair = [];
 
 /* SCREEN SWITCH */
 
 function showScreen(screen){
 
-    [intro, quiz, loading, result]
+   [intro, pairSelect, quiz, loading, result]
     .forEach(s => s.classList.remove("active"));
 
     screen.classList.add("active");
@@ -110,6 +115,48 @@ startBtn.addEventListener("click", () => {
 
     if(usernameInput.value.trim() === ""){
         alert("Enter your name.");
+        return;
+    }
+
+    showScreen(pairSelect);
+
+});
+pairOptions.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        const name =
+        option.getAttribute("data-name");
+
+        if(selectedPair.includes(name)){
+
+            selectedPair =
+            selectedPair.filter(n => n !== name);
+
+            option.classList.remove("selected");
+
+        }
+
+        else{
+
+            if(selectedPair.length < 2){
+
+                selectedPair.push(name);
+
+                option.classList.add("selected");
+            }
+
+        }
+
+    });
+
+});
+
+continueBtn.addEventListener("click", () => {
+
+    if(selectedPair.length !== 2){
+
+        alert("Choose exactly 2.");
         return;
     }
 
