@@ -1,22 +1,45 @@
 const intro = document.getElementById("intro");
-const quiz = document.getElementById("quiz");
-const loading = document.getElementById("loading");
-const result = document.getElementById("result");
+const groupScreen =
+document.getElementById("groupScreen");
 
-const pairSelect = document.getElementById("pairSelect");
-const continueBtn = document.getElementById("continueBtn");
+const modeScreen =
+document.getElementById("modeScreen");
 
-const pairButtons =
-document.getElementById("pairButtons");
+const memberScreen =
+document.getElementById("memberScreen");
 
-const groupTitle =
-document.getElementById("groupTitle");
+const quiz =
+document.getElementById("quiz");
 
-const extraResult =
-document.getElementById("extraResult");
+const loading =
+document.getElementById("loading");
 
-const startBtn = document.getElementById("startBtn");
-const restartBtn = document.getElementById("restartBtn");
+const result =
+document.getElementById("result");
+
+const startBtn =
+document.getElementById("startBtn");
+
+const restartBtn =
+document.getElementById("restartBtn");
+
+const groupButtons =
+document.getElementById("groupButtons");
+
+const memberButtons =
+document.getElementById("memberButtons");
+
+const groupContinueBtn =
+document.getElementById("groupContinueBtn");
+
+const memberContinueBtn =
+document.getElementById("memberContinueBtn");
+
+const groupModeBtn =
+document.getElementById("groupModeBtn");
+
+const memberModeBtn =
+document.getElementById("memberModeBtn");
 
 const questionText =
 document.getElementById("questionText");
@@ -27,8 +50,14 @@ document.getElementById("options");
 const resultText =
 document.getElementById("resultText");
 
+const extraResult =
+document.getElementById("extraResult");
+
 const usernameInput =
 document.getElementById("username");
+
+const selectedGroupTitle =
+document.getElementById("selectedGroupTitle");
 
 /* GROUP DATA */
 
@@ -37,7 +66,6 @@ const groups = {
     BLACKPINK: {
 
         Lisa: {
-
             attractive: "Confident and bold",
             comfort: "Funny and energetic",
             trust: "Honest and straightforward",
@@ -45,11 +73,9 @@ const groups = {
             emotional: "Protective energy",
             lovable: "Chaotic but caring",
             energy: "Independent and fearless"
-
         },
 
         Jennie: {
-
             attractive: "Calm and classy",
             comfort: "Soft and understanding",
             trust: "Quiet and reliable",
@@ -57,11 +83,9 @@ const groups = {
             emotional: "Deep understanding",
             lovable: "Cold outside, soft inside",
             energy: "Elegant and selective"
-
         },
 
         Rosé: {
-
             attractive: "Gentle and emotional",
             comfort: "Sweet and comforting",
             trust: "Sensitive and honest",
@@ -69,11 +93,9 @@ const groups = {
             emotional: "Soft-hearted warmth",
             lovable: "Cute and caring",
             energy: "Dreamy and emotional"
-
         },
 
         Jisoo: {
-
             attractive: "Mature and calm",
             comfort: "Peaceful and stable",
             trust: "Patient and loyal",
@@ -81,7 +103,6 @@ const groups = {
             emotional: "Safe and comforting",
             lovable: "Funny in a calm way",
             energy: "Warm and balanced"
-
         }
 
     },
@@ -89,7 +110,6 @@ const groups = {
     BTS: {
 
         Jungkook: {
-
             attractive: "Confident and intense",
             comfort: "Playful and caring",
             trust: "Protective and loyal",
@@ -97,11 +117,9 @@ const groups = {
             emotional: "Hidden emotional depth",
             lovable: "Chaotic but sweet",
             energy: "Fearless and passionate"
-
         },
 
         V: {
-
             attractive: "Mysterious and artistic",
             comfort: "Quiet and understanding",
             trust: "Gentle and thoughtful",
@@ -109,11 +127,9 @@ const groups = {
             emotional: "Warm hidden softness",
             lovable: "Strange but lovable",
             energy: "Dreamy and calm"
-
         },
 
         Jimin: {
-
             attractive: "Charming and affectionate",
             comfort: "Emotionally supportive",
             trust: "Sensitive and caring",
@@ -121,55 +137,6 @@ const groups = {
             emotional: "Deep attachment",
             lovable: "Cute and clingy",
             energy: "Sweet and emotional"
-
-        },
-
-        RM: {
-
-            attractive: "Intelligent and calm",
-            comfort: "Mature understanding",
-            trust: "Wise and reliable",
-            miss: "Meaningful conversations",
-            emotional: "Quiet emotional support",
-            lovable: "Clumsy but caring",
-            energy: "Peaceful leadership"
-
-        },
-
-        Jin: {
-
-            attractive: "Funny and stable",
-            comfort: "Warm and protective",
-            trust: "Reliable and honest",
-            miss: "Comforting presence",
-            emotional: "Hidden sensitivity",
-            lovable: "Dad jokes and care",
-            energy: "Bright and comforting"
-
-        },
-
-        Suga: {
-
-            attractive: "Cold but caring",
-            comfort: "Silent understanding",
-            trust: "Straightforward honesty",
-            miss: "Quiet emotional safety",
-            emotional: "Deep hidden emotions",
-            lovable: "Savage but soft",
-            energy: "Calm and intense"
-
-        },
-
-        "J-Hope": {
-
-            attractive: "Positive and energetic",
-            comfort: "Bright emotional support",
-            trust: "Optimistic and loyal",
-            miss: "Happy energy",
-            emotional: "Pure-hearted warmth",
-            lovable: "Funny and affectionate",
-            energy: "Sunshine chaos"
-
         }
 
     }
@@ -185,104 +152,188 @@ let score = {
     B: 0
 };
 
+let selectedGroup = "";
+let selectedPair = [];
+let mode = "";
 let directChoice = "";
 
-let selectedPair = [];
+/* SCREEN SWITCH */
 
-let selectedGroup = "";
+function showScreen(screen){
 
-/* GENERATE BUTTONS */
+    [
+        intro,
+        groupScreen,
+        modeScreen,
+        memberScreen,
+        quiz,
+        loading,
+        result
+    ]
+    .forEach(s =>
+        s.classList.remove("active")
+    );
 
-function generateButtons(){
+    screen.classList.add("active");
 
-    pairButtons.innerHTML = "";
+}
+
+/* START */
+
+startBtn.addEventListener("click", () => {
+
+    if(usernameInput.value.trim() === ""){
+
+        alert("Enter your name.");
+        return;
+
+    }
+
+    showScreen(groupScreen);
+
+});
+
+/* GENERATE GROUPS */
+
+function generateGroups(){
+
+    groupButtons.innerHTML = "";
 
     for(let group in groups){
 
-        const title =
-        document.createElement("h3");
+        const div =
+        document.createElement("div");
 
-        title.classList.add("groupName");
+        div.classList.add("pairOption");
 
-        title.innerText = group;
+        div.innerText = group;
 
-        pairButtons.appendChild(title);
+        div.addEventListener("click", () => {
 
-        for(let idol in groups[group]){
-
-            const div =
-            document.createElement("div");
-
-            div.classList.add("pairOption");
-
-            div.setAttribute("data-group", group);
-
-            div.setAttribute("data-name", idol);
-
-            div.innerText = idol;
-
-            div.addEventListener("click", () => {
-
-                selectOption(div);
-
+            document
+            .querySelectorAll("#groupButtons .pairOption")
+            .forEach(btn => {
+                btn.classList.remove("selected");
             });
 
-            pairButtons.appendChild(div);
+            div.classList.add("selected");
 
-        }
+            selectedGroup = group;
+
+        });
+
+        groupButtons.appendChild(div);
+
+    }
+
+}
+
+generateGroups();
+
+/* GROUP CONTINUE */
+
+groupContinueBtn.addEventListener("click", () => {
+
+    if(selectedGroup === ""){
+
+        alert("Choose a group.");
+        return;
+
+    }
+
+    showScreen(modeScreen);
+
+});
+
+/* MODE */
+
+groupModeBtn.addEventListener("click", () => {
+
+    mode = "group";
+
+    alert(
+        "Group comparison coming soon."
+    );
+
+});
+
+memberModeBtn.addEventListener("click", () => {
+
+    mode = "member";
+
+    showMemberScreen();
+
+});
+
+/* MEMBER SCREEN */
+
+function showMemberScreen(){
+
+    showScreen(memberScreen);
+
+    selectedGroupTitle.innerText =
+    selectedGroup;
+
+    memberButtons.innerHTML = "";
+
+    selectedPair = [];
+
+    for(let idol in groups[selectedGroup]){
+
+        const div =
+        document.createElement("div");
+
+        div.classList.add("pairOption");
+
+        div.innerText = idol;
+
+        div.addEventListener("click", () => {
+
+            if(selectedPair.includes(idol)){
+
+                selectedPair =
+                selectedPair.filter(
+                    n => n !== idol
+                );
+
+                div.classList.remove("selected");
+
+                return;
+
+            }
+
+            if(selectedPair.length < 2){
+
+                selectedPair.push(idol);
+
+                div.classList.add("selected");
+
+            }
+
+        });
+
+        memberButtons.appendChild(div);
 
     }
 
 }
 
-/* OPTION SELECT */
+/* MEMBER CONTINUE */
 
-function selectOption(option){
+memberContinueBtn.addEventListener("click", () => {
 
-    const name =
-    option.getAttribute("data-name");
+    if(selectedPair.length !== 2){
 
-    const group =
-    option.getAttribute("data-group");
-
-    if(selectedPair.includes(name)){
-
-        selectedPair =
-        selectedPair.filter(n => n !== name);
-
-        option.classList.remove("selected");
-
-        if(selectedPair.length === 0){
-            selectedGroup = "";
-        }
-
+        alert("Choose exactly 2.");
         return;
 
     }
 
-    if(selectedPair.length === 0){
+    showScreen(quiz);
 
-        selectedGroup = group;
+    loadQuestion();
 
-    }
-
-    if(group !== selectedGroup){
-
-        alert("Choose only from same group.");
-
-        return;
-
-    }
-
-    if(selectedPair.length < 2){
-
-        selectedPair.push(name);
-
-        option.classList.add("selected");
-
-    }
-
-}
+});
 
 /* QUESTIONS */
 
@@ -353,10 +404,17 @@ function getQuestions(){
         },
 
         {
-            question: "Who do you like more?",
+            question: "What do you like more?",
             answers: [
-                { text: selectedPair[0], type: "ADirect" },
-                { text: selectedPair[1], type: "BDirect" }
+                {
+                    text: selectedPair[0],
+                    type: "ADirect"
+                },
+
+                {
+                    text: selectedPair[1],
+                    type: "BDirect"
+                }
             ]
         }
 
@@ -364,70 +422,24 @@ function getQuestions(){
 
 }
 
-/* SCREEN SWITCH */
-
-function showScreen(screen){
-
-    [intro, pairSelect, quiz, loading, result]
-    .forEach(s => s.classList.remove("active"));
-
-    screen.classList.add("active");
-
-}
-
-/* START */
-
-startBtn.addEventListener("click", () => {
-
-    if(usernameInput.value.trim() === ""){
-
-        alert("Enter your name.");
-
-        return;
-
-    }
-
-    showScreen(pairSelect);
-
-});
-
-/* CONTINUE */
-
-continueBtn.addEventListener("click", () => {
-
-    if(selectedPair.length !== 2){
-
-        alert("Choose exactly 2.");
-
-        return;
-
-    }
-
-    groupTitle.innerText =
-    selectedGroup;
-
-    showScreen(quiz);
-
-    loadQuestion();
-
-});
-
 /* LOAD QUESTION */
 
 function loadQuestion(){
 
     options.innerHTML = "";
 
-    let q =
+    const q =
     getQuestions()[currentQuestion];
 
     questionText.innerText =
     q.question;
 
-    let shuffledAnswers =
-    q.answers.sort(() => Math.random() - 0.5);
+    const shuffled =
+    q.answers.sort(
+        () => Math.random() - 0.5
+    );
 
-    shuffledAnswers.forEach(answer => {
+    shuffled.forEach(answer => {
 
         const div =
         document.createElement("div");
@@ -499,17 +511,12 @@ function showResult(){
 
     showScreen(result);
 
-    let subconscious =
+    const subconscious =
     score.A > score.B
     ? selectedPair[0]
     : selectedPair[1];
 
-    let indirectPreference =
-    score.A > score.B
-    ? selectedPair[0]
-    : selectedPair[1];
-
-    let difference =
+    const difference =
     Math.abs(score.A - score.B);
 
     let percent =
@@ -541,7 +548,7 @@ function showResult(){
 
         "%" +
 
-        "\n\nContradiction detected.\nYour emotional pattern did not match your final answer.";
+        "\n\nContradiction detected.";
 
     }
 
@@ -575,7 +582,7 @@ function showResult(){
     extraResult.innerHTML =
 
     "<br><b>Most Indirectly Preferred:</b> "
-    + indirectPreference +
+    + subconscious +
 
     "<br><br><b>Subconscious Match:</b> "
     + subconscious;
@@ -593,11 +600,11 @@ restartBtn.addEventListener("click", () => {
         B: 0
     };
 
-    directChoice = "";
+    selectedGroup = "";
 
     selectedPair = [];
 
-    selectedGroup = "";
+    directChoice = "";
 
     usernameInput.value = "";
 
@@ -605,10 +612,4 @@ restartBtn.addEventListener("click", () => {
 
     showScreen(intro);
 
-    generateButtons();
-
 });
-
-/* INIT */
-
-generateButtons();
