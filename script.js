@@ -242,7 +242,10 @@ function loadQuestion(){
     questionText.innerText =
     q.question;
 
-    q.answers.forEach(answer => {
+   let shuffledAnswers =
+q.answers.sort(() => Math.random() - 0.5);
+
+shuffledAnswers.forEach(answer => {
 
         const div =
         document.createElement("div");
