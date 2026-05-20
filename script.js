@@ -6,8 +6,7 @@ const result = document.getElementById("result");
 const pairSelect = document.getElementById("pairSelect");
 const continueBtn = document.getElementById("continueBtn");
 
-const pairOptions =
-document.querySelectorAll(".pairOption");
+let pairOptions;
 
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
@@ -74,92 +73,93 @@ const characters = {
         lovable: "Funny in a calm way",
         energy: "Warm and balanced"
 
+    },
+
+    Jungkook: {
+
+        attractive: "Confident and intense",
+        comfort: "Playful and caring",
+        trust: "Protective and loyal",
+        miss: "Constant attention",
+        emotional: "Hidden emotional depth",
+        lovable: "Chaotic but sweet",
+        energy: "Fearless and passionate"
+
+    },
+
+    V: {
+
+        attractive: "Mysterious and artistic",
+        comfort: "Quiet and understanding",
+        trust: "Gentle and thoughtful",
+        miss: "Deep emotional presence",
+        emotional: "Warm hidden softness",
+        lovable: "Strange but lovable",
+        energy: "Dreamy and calm"
+
+    },
+
+    Jimin: {
+
+        attractive: "Charming and affectionate",
+        comfort: "Emotionally supportive",
+        trust: "Sensitive and caring",
+        miss: "Soft emotional warmth",
+        emotional: "Deep attachment",
+        lovable: "Cute and clingy",
+        energy: "Sweet and emotional"
+
+    },
+
+    RM: {
+
+        attractive: "Intelligent and calm",
+        comfort: "Mature understanding",
+        trust: "Wise and reliable",
+        miss: "Meaningful conversations",
+        emotional: "Quiet emotional support",
+        lovable: "Clumsy but caring",
+        energy: "Peaceful leadership"
+
+    },
+
+    Jin: {
+
+        attractive: "Funny and stable",
+        comfort: "Warm and protective",
+        trust: "Reliable and honest",
+        miss: "Comforting presence",
+        emotional: "Hidden sensitivity",
+        lovable: "Dad jokes and care",
+        energy: "Bright and comforting"
+
+    },
+
+    Suga: {
+
+        attractive: "Cold but caring",
+        comfort: "Silent understanding",
+        trust: "Straightforward honesty",
+        miss: "Quiet emotional safety",
+        emotional: "Deep hidden emotions",
+        lovable: "Savage but soft",
+        energy: "Calm and intense"
+
+    },
+
+    "J-Hope": {
+
+        attractive: "Positive and energetic",
+        comfort: "Bright emotional support",
+        trust: "Optimistic and loyal",
+        miss: "Happy energy",
+        emotional: "Pure-hearted warmth",
+        lovable: "Funny and affectionate",
+        energy: "Sunshine chaos"
+
     }
-Jungkook: {
 
-    attractive: "Confident and intense",
-    comfort: "Playful and caring",
-    trust: "Protective and loyal",
-    miss: "Constant attention",
-    emotional: "Hidden emotional depth",
-    lovable: "Chaotic but sweet",
-    energy: "Fearless and passionate"
-
-},
-
-V: {
-
-    attractive: "Mysterious and artistic",
-    comfort: "Quiet and understanding",
-    trust: "Gentle and thoughtful",
-    miss: "Deep emotional presence",
-    emotional: "Warm hidden softness",
-    lovable: "Strange but lovable",
-    energy: "Dreamy and calm"
-
-},
-
-Jimin: {
-
-    attractive: "Charming and affectionate",
-    comfort: "Emotionally supportive",
-    trust: "Sensitive and caring",
-    miss: "Soft emotional warmth",
-    emotional: "Deep attachment",
-    lovable: "Cute and clingy",
-    energy: "Sweet and emotional"
-
-},
-
-RM: {
-
-    attractive: "Intelligent and calm",
-    comfort: "Mature understanding",
-    trust: "Wise and reliable",
-    miss: "Meaningful conversations",
-    emotional: "Quiet emotional support",
-    lovable: "Clumsy but caring",
-    energy: "Peaceful leadership"
-
-},
-
-Jin: {
-
-    attractive: "Funny and stable",
-    comfort: "Warm and protective",
-    trust: "Reliable and honest",
-    miss: "Comforting presence",
-    emotional: "Hidden sensitivity",
-    lovable: "Dad jokes and care",
-    energy: "Bright and comforting"
-
-},
-
-Suga: {
-
-    attractive: "Cold but caring",
-    comfort: "Silent understanding",
-    trust: "Straightforward honesty",
-    miss: "Quiet emotional safety",
-    emotional: "Deep hidden emotions",
-    lovable: "Savage but soft",
-    energy: "Calm and intense"
-
-},
-
-"J-Hope": {
-
-    attractive: "Positive and energetic",
-    comfort: "Bright emotional support",
-    trust: "Optimistic and loyal",
-    miss: "Happy energy",
-    emotional: "Pure-hearted warmth",
-    lovable: "Funny and affectionate",
-    energy: "Sunshine chaos"
-
-}
 };
-
 
 /* DYNAMIC QUESTIONS */
 
@@ -257,7 +257,13 @@ function showScreen(screen){
     .forEach(s => s.classList.remove("active"));
 
     screen.classList.add("active");
+
 }
+
+/* LOAD PAIR OPTIONS */
+
+pairOptions =
+document.querySelectorAll(".pairOption");
 
 /* START */
 
@@ -297,6 +303,7 @@ pairOptions.forEach(option => {
                 selectedPair.push(name);
 
                 option.classList.add("selected");
+
             }
 
         }
@@ -313,6 +320,7 @@ continueBtn.addEventListener("click", () => {
 
         alert("Choose exactly 2.");
         return;
+
     }
 
     showScreen(quiz);
@@ -333,10 +341,10 @@ function loadQuestion(){
     questionText.innerText =
     q.question;
 
-   let shuffledAnswers =
-q.answers.sort(() => Math.random() - 0.5);
+    let shuffledAnswers =
+    q.answers.sort(() => Math.random() - 0.5);
 
-shuffledAnswers.forEach(answer => {
+    shuffledAnswers.forEach(answer => {
 
         const div =
         document.createElement("div");
@@ -348,8 +356,6 @@ shuffledAnswers.forEach(answer => {
 
         div.addEventListener("click", () => {
 
-            /* INDIRECT */
-
             if(answer.type === "A"){
                 score.A++;
             }
@@ -357,8 +363,6 @@ shuffledAnswers.forEach(answer => {
             if(answer.type === "B"){
                 score.B++;
             }
-
-            /* DIRECT */
 
             if(answer.type === "ADirect"){
                 directChoice =
@@ -417,14 +421,15 @@ function showResult(){
     ? selectedPair[0]
     : selectedPair[1];
 
-  let difference =
-Math.abs(score.A - score.B);
+    let difference =
+    Math.abs(score.A - score.B);
 
-let percent = 50 + (difference * 10);
+    let percent =
+    50 + (difference * 10);
 
-if(percent > 95){
-    percent = 95;
-}
+    if(percent > 95){
+        percent = 95;
+    }
 
     let finalMessage = "";
 
@@ -499,7 +504,9 @@ restartBtn.addEventListener("click", () => {
     document
     .querySelectorAll(".pairOption")
     .forEach(option => {
+
         option.classList.remove("selected");
+
     });
 
     usernameInput.value = "";
