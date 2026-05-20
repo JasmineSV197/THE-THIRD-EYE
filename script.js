@@ -326,11 +326,14 @@ function showResult(){
     ? selectedPair[0]
     : selectedPair[1];
 
-    let highest =
-    Math.max(score.A, score.B);
+  let difference =
+Math.abs(score.A - score.B);
 
-    let percent =
-    Math.round((highest / 7) * 100);
+let percent = 50 + (difference * 10);
+
+if(percent > 95){
+    percent = 95;
+}
 
     let finalMessage = "";
 
