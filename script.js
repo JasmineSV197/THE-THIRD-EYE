@@ -290,6 +290,17 @@ function analyze(){
 
 /* RESULT */
 function showResult(){
+  const userData = {
+    name: usernameInput.value,
+    group: selectedGroup,
+    pair: selectedPair,
+    directChoice: directChoice,
+    subconscious: subconscious,
+    percent: percent,
+    time: new Date().toISOString()
+};
+
+saveUserData(userData);
 
     showScreen(result);
 
