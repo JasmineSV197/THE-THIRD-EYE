@@ -239,3 +239,47 @@ button:hover{
         transform:translateY(0);
     }
 }
+/* PAIR SELECT */
+
+.pairTitle{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.pairButtons{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.pairOption{
+
+    background:#131327;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    border:2px solid transparent;
+
+    transition:0.3s;
+}
+
+.pairOption:hover{
+    transform:translateY(-2px);
+}
+
+.pairOption.selected{
+    border-color:#8f5cff;
+
+    background:#1d1d35;
+}
