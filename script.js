@@ -1,26 +1,19 @@
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-  import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-  const firebaseConfig = {
+/* 🔥 FIREBASE INIT */
+const firebaseConfig = {
     apiKey: "YOUR_KEY",
     authDomain: "YOUR_PROJECT.firebaseapp.com",
     projectId: "YOUR_PROJECT_ID",
     storageBucket: "YOUR_PROJECT.appspot.com",
     messagingSenderId: "XXXX",
     appId: "XXXX"
-  };
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-  window.saveUserData = async function(data) {
-    await addDoc(collection(db, "thirdEyeResults"), data);
-  };
-</script>
+/* ELEMENTS */
 const intro = document.getElementById("intro");
 const groupScreen = document.getElementById("groupScreen");
-const modeScreen = document.getElementById("modeScreen");
 const memberScreen = document.getElementById("memberScreen");
 const quiz = document.getElementById("quiz");
 const loading = document.getElementById("loading");
@@ -35,9 +28,6 @@ const memberButtons = document.getElementById("memberButtons");
 const groupContinueBtn = document.getElementById("groupContinueBtn");
 const memberContinueBtn = document.getElementById("memberContinueBtn");
 
-const groupModeBtn = document.getElementById("groupModeBtn");
-const memberModeBtn = document.getElementById("memberModeBtn");
-
 const questionText = document.getElementById("questionText");
 const options = document.getElementById("options");
 
@@ -45,231 +35,164 @@ const resultText = document.getElementById("resultText");
 const extraResult = document.getElementById("extraResult");
 
 const usernameInput = document.getElementById("username");
-
 const selectedGroupTitle = document.getElementById("selectedGroupTitle");
 
 /* DATA */
 const groups = {
-    BLACKPINK: { /* same as yours */ },
-    BTS: { /* same as yours */ }
+    BLACKPINK: {
+        Lisa: {
+            attractive:"Confident", comfort:"Funny", trust:"Honest",
+            miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless"
+        },
+        Jennie: {
+            attractive:"Classy", comfort:"Soft", trust:"Reliable",
+            miss:"Warmth", emotional:"Deep", lovable:"Soft inside", energy:"Elegant"
+        }
+    },
+    BTS: {
+        Jungkook: {
+            attractive:"Intense", comfort:"Playful", trust:"Loyal",
+            miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Passionate"
+        },
+        V: {
+            attractive:"Artistic", comfort:"Calm", trust:"Gentle",
+            miss:"Presence", emotional:"Soft", lovable:"Strange cute", energy:"Dreamy"
+        }
+    }
 };
 
 /* STATE */
-let currentQuestion = 0;
-let score = { A: 0, B: 0 };
-
 let selectedGroup = "";
 let selectedPair = [];
-let mode = "";
+let currentQuestion = 0;
+let score = { A:0, B:0 };
 let directChoice = "";
 
-/* SCREEN SWITCH */
+/* SCREEN */
 function showScreen(screen){
-    [intro, groupScreen, modeScreen, memberScreen, quiz, loading, result]
+    [intro, groupScreen, memberScreen, quiz, loading, result]
     .forEach(s => s.classList.remove("active"));
-
     screen.classList.add("active");
 }
 
 /* START */
-startBtn.addEventListener("click", () => {
-
-    if(usernameInput.value.trim() === ""){
-        alert("Enter your name.");
+startBtn.onclick = () => {
+    if(!usernameInput.value.trim()){
+        alert("Enter name");
         return;
     }
-
-    resetAll();
     showScreen(groupScreen);
-});
+    generateGroups();
+};
 
-/* GENERATE GROUPS */
+/* GROUPS */
 function generateGroups(){
-
     groupButtons.innerHTML = "";
 
-    for(let group in groups){
+    Object.keys(groups).forEach(group => {
 
         const div = document.createElement("div");
-        div.classList.add("pairOption");
         div.innerText = group;
+        div.className = "pairOption";
 
-        div.addEventListener("click", () => {
-
-            document.querySelectorAll("#groupButtons .pairOption")
-            .forEach(b => b.classList.remove("selected"));
-
-            div.classList.add("selected");
+        div.onclick = () => {
             selectedGroup = group;
-
-        });
+            document.querySelectorAll("#groupButtons div")
+            .forEach(b => b.classList.remove("selected"));
+            div.classList.add("selected");
+        };
 
         groupButtons.appendChild(div);
-    }
+    });
 }
 
-generateGroups();
-
-/* GROUP CONTINUE */
-groupContinueBtn.addEventListener("click", () => {
-
-    if(!selectedGroup){
-        alert("Choose a group.");
-        return;
-    }
-
-    showScreen(modeScreen);
-});
-
-/* MODE */
-groupModeBtn.addEventListener("click", () => {
-    alert("Group mode coming soon 👁️");
-});
-
-memberModeBtn.addEventListener("click", () => {
-    showMemberScreen();
-});
-
-/* MEMBER SCREEN */
-function showMemberScreen(){
-
+/* CONTINUE GROUP */
+groupContinueBtn.onclick = () => {
+    if(!selectedGroup) return alert("Choose group");
     showScreen(memberScreen);
+    loadMembers();
+};
 
-    selectedGroupTitle.innerText = selectedGroup;
-
+/* MEMBERS */
+function loadMembers(){
     memberButtons.innerHTML = "";
     selectedPair = [];
 
-    for(let idol in groups[selectedGroup]){
+    Object.keys(groups[selectedGroup]).forEach(name => {
 
         const div = document.createElement("div");
-        div.classList.add("pairOption");
-        div.innerText = idol;
+        div.innerText = name;
+        div.className = "pairOption";
 
-        div.addEventListener("click", () => {
+        div.onclick = () => {
 
-            if(selectedPair.includes(idol)){
-                selectedPair = selectedPair.filter(n => n !== idol);
+            if(selectedPair.includes(name)){
+                selectedPair = selectedPair.filter(n => n!==name);
                 div.classList.remove("selected");
                 return;
             }
 
             if(selectedPair.length < 2){
-                selectedPair.push(idol);
+                selectedPair.push(name);
                 div.classList.add("selected");
             }
-
-        });
+        };
 
         memberButtons.appendChild(div);
-    }
+    });
 }
 
-/* MEMBER CONTINUE */
-memberContinueBtn.addEventListener("click", () => {
-
-    if(selectedPair.length !== 2){
-        alert("Choose exactly 2.");
-        return;
-    }
-
+/* CONTINUE MEMBER */
+memberContinueBtn.onclick = () => {
+    if(selectedPair.length !== 2) return alert("Choose 2");
     currentQuestion = 0;
-    score = { A: 0, B: 0 };
+    score = {A:0,B:0};
     directChoice = "";
-
     showScreen(quiz);
     loadQuestion();
-});
+};
 
 /* QUESTIONS */
 function getQuestions(){
-
     const A = groups[selectedGroup][selectedPair[0]];
     const B = groups[selectedGroup][selectedPair[1]];
 
     return [
-        {
-            question: "What feels more attractive?",
-            answers: [
-                { text: A.attractive, type: "A" },
-                { text: B.attractive, type: "B" }
-            ]
-        },
-        {
-            question: "What feels more comforting?",
-            answers: [
-                { text: A.comfort, type: "A" },
-                { text: B.comfort, type: "B" }
-            ]
-        },
-        {
-            question: "What feels easier to trust?",
-            answers: [
-                { text: A.trust, type: "A" },
-                { text: B.trust, type: "B" }
-            ]
-        },
-        {
-            question: "What would you miss more?",
-            answers: [
-                { text: A.miss, type: "A" },
-                { text: B.miss, type: "B" }
-            ]
-        },
-        {
-            question: "What feels more emotional?",
-            answers: [
-                { text: A.emotional, type: "A" },
-                { text: B.emotional, type: "B" }
-            ]
-        },
-        {
-            question: "What feels more lovable?",
-            answers: [
-                { text: A.lovable, type: "A" },
-                { text: B.lovable, type: "B" }
-            ]
-        },
-        {
-            question: "What energy do you prefer?",
-            answers: [
-                { text: A.energy, type: "A" },
-                { text: B.energy, type: "B" }
-            ]
-        },
-        {
-            question: "What do you REALLY choose?",
-            answers: [
-                { text: selectedPair[0], type: "ADirect" },
-                { text: selectedPair[1], type: "BDirect" }
-            ]
-        }
+        { q:"Attractive?", a:[{t:A.attractive,v:"A"},{t:B.attractive,v:"B"}] },
+        { q:"Comfort?", a:[{t:A.comfort,v:"A"},{t:B.comfort,v:"B"}] },
+        { q:"Trust?", a:[{t:A.trust,v:"A"},{t:B.trust,v:"B"}] },
+        { q:"Miss?", a:[{t:A.miss,v:"A"},{t:B.miss,v:"B"}] },
+        { q:"Emotion?", a:[{t:A.emotional,v:"A"},{t:B.emotional,v:"B"}] },
+        { q:"Love?", a:[{t:A.lovable,v:"A"},{t:B.lovable,v:"B"}] },
+        { q:"Energy?", a:[{t:A.energy,v:"A"},{t:B.energy,v:"B"}] },
+        { q:"Final choice?", a:[
+            {t:selectedPair[0],v:"AD"},
+            {t:selectedPair[1],v:"BD"}
+        ]}
     ];
 }
 
 /* LOAD */
 function loadQuestion(){
 
+    const q = getQuestions()[currentQuestion];
+    questionText.innerText = q.q;
+
     options.innerHTML = "";
 
-    const q = getQuestions()[currentQuestion];
-    questionText.innerText = q.question;
-
-    q.answers
-    .sort(() => Math.random() - 0.5)
-    .forEach(answer => {
+    q.a.sort(()=>Math.random()-0.5).forEach(ans => {
 
         const div = document.createElement("div");
-        div.classList.add("option");
-        div.innerText = answer.text;
+        div.innerText = ans.t;
+        div.className = "option";
 
         div.onclick = () => {
 
-            if(answer.type === "A") score.A++;
-            if(answer.type === "B") score.B++;
+            if(ans.v==="A") score.A++;
+            if(ans.v==="B") score.B++;
 
-            if(answer.type === "ADirect") directChoice = selectedPair[0];
-            if(answer.type === "BDirect") directChoice = selectedPair[1];
+            if(ans.v==="AD") directChoice = selectedPair[0];
+            if(ans.v==="BD") directChoice = selectedPair[1];
 
             currentQuestion++;
 
@@ -284,33 +207,19 @@ function loadQuestion(){
 /* ANALYZE */
 function analyze(){
     showScreen(loading);
-
-    setTimeout(showResult, 2500);
+    setTimeout(showResult, 2000);
 }
 
-/* RESULT */
+/* RESULT + FIREBASE */
 function showResult(){
-  const userData = {
-    name: usernameInput.value,
-    group: selectedGroup,
-    pair: selectedPair,
-    directChoice: directChoice,
-    subconscious: subconscious,
-    percent: percent,
-    time: new Date().toISOString()
-};
-
-saveUserData(userData);
 
     showScreen(result);
 
     const subconscious =
         score.A > score.B ? selectedPair[0] : selectedPair[1];
 
-    const difference = Math.abs(score.A - score.B);
-
-    let percent = 50 + difference * 10;
-    if(percent > 95) percent = 95;
+    const diff = Math.abs(score.A-score.B);
+    let percent = Math.min(95, 50 + diff*10);
 
     const indirect =
         score.A >= score.B ? selectedPair[0] : selectedPair[1];
@@ -318,34 +227,31 @@ saveUserData(userData);
     resultText.innerText =
         `${usernameInput.value}
 
-Conscious Choice: ${directChoice}
-Subconscious Preference: ${subconscious} — ${percent}%`;
+Conscious: ${directChoice}
+Subconscious: ${subconscious} — ${percent}%`;
 
-    extraResult.innerHTML = `
-        <br><b>Most Indirectly Preferred:</b> ${indirect}
-        <br><b>Deep Subconscious Bias:</b> ${subconscious}
-    `;
+    extraResult.innerHTML =
+        `Indirect Preference: ${indirect}`;
+
+    /* SAVE */
+    db.collection("thirdEyeResults").add({
+        name: usernameInput.value,
+        group: selectedGroup,
+        pair: selectedPair,
+        conscious: directChoice,
+        subconscious,
+        indirect,
+        percent,
+        time: new Date()
+    });
 }
 
-/* RESET */
-function resetAll(){
-
-    currentQuestion = 0;
-    score = { A: 0, B: 0 };
-    selectedGroup = "";
-    selectedPair = [];
-    mode = "";
-    directChoice = "";
-    extraResult.innerHTML = "";
-
-    document.querySelectorAll(".pairOption")
-    .forEach(b => b.classList.remove("selected"));
-}
-
-restartBtn.addEventListener("click", () => {
-
-    resetAll();
+/* RESTART */
+restartBtn.onclick = () => {
+    selectedGroup="";
+    selectedPair=[];
+    currentQuestion=0;
+    score={A:0,B:0};
+    directChoice="";
     showScreen(intro);
-    generateGroups();
-
-});
+};
