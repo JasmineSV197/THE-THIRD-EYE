@@ -10,6 +10,14 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+function saveToFirebase(data){
+    try {
+        db.collection("thirdEyeResults").add(data)
+        .catch(err => console.log("Firebase error:", err));
+    } catch (e) {
+        console.log("Firebase not ready:", e);
+    }
+}
 
 /* ELEMENTS */
 const intro = document.getElementById("intro");
@@ -459,17 +467,16 @@ Your decision matches your subconscious pattern.`;
     `;
 
     /* SAVE */
-    db.collection("thirdEyeResults").add({
-        name: usernameInput.value,
-        group: selectedGroup,
-        pair: selectedPair,
-        conscious,
-        subconscious,
-        indirect,
-        percent,
-        time: new Date()
-    });
-}
+   saveToFirebase({
+    name: usernameInput.value,
+    group: selectedGroup,
+    pair: selectedPair,
+    conscious,
+    subconscious,
+    indirect,
+    percent,
+    time: new Date()
+});
 
 /* RESTART */
 restartBtn.onclick = () => {
