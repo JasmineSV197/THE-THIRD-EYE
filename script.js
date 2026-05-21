@@ -50,45 +50,53 @@ const selectedGroupTitle = document.getElementById("selectedGroupTitle");
 
 /* ================= DATA ================= */
 const groups = {
-    BLACKPINK: {
-        Lisa: { attractive:"Confident", comfort:"Funny", trust:"Honest", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
-        Jennie: { attractive:"Classy", comfort:"Soft", trust:"Reliable", miss:"Warm", emotional:"Deep", lovable:"Soft inside", energy:"Elegant" },
-        Rosé: { attractive:"Gentle", comfort:"Sweet", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Cute", energy:"Dreamy" },
-        Jisoo: { attractive:"Calm", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Safe", lovable:"Funny calm", energy:"Balanced" }
-    },
+  BLACKPINK: {
+    Lisa: { attractive:"Confident", comfort:"Fun", trust:"Loyal", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
+    Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
+    Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
+    Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
+},
 
-    BTS: {
-        Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Passionate" },
-        V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Cute strange", energy:"Dreamy" },
-        Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warm", emotional:"Attachment", lovable:"Cute", energy:"Sweet" },
-        RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Support", lovable:"Clumsy", energy:"Leader" },
-        Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
-        Suga: { attractive:"Cold warm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Calm" },
-        "J-Hope": { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
-    },
+  BTS: {
+    Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
+    V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Unique", energy:"Dreamy" },
+    Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
+    RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
+    Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
+    Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
+    JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
+}
 
-    TWICE: {
-        Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
-        Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
-        Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
-        Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
-        Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" }
-    },
+ TWICE: {
+    Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
+    Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
+    Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
+    Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
+    Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" },
+    Mina: { attractive:"Elegant", comfort:"Quiet", trust:"Gentle", miss:"Grace", emotional:"Soft", lovable:"Calm beauty", energy:"Smooth" },
+    Dahyun: { attractive:"Funny charm", comfort:"Bright", trust:"Honest", miss:"Laugh", emotional:"Playful", lovable:"Goofy", energy:"Cheerful" },
+    Chaeyoung: { attractive:"Artistic", comfort:"Cool", trust:"Unique", miss:"Creativity", emotional:"Deep", lovable:"Creative", energy:"Free" },
+    Tzuyu: { attractive:"Visual", comfort:"Calm", trust:"Reserved", miss:"Presence", emotional:"Soft", lovable:"Gentle", energy:"Quiet" }
+}
 
-    STRAYKIDS: {
-        BangChan: { attractive:"Leader energy", comfort:"Protective", trust:"Strong", miss:"Guidance", emotional:"Deep", lovable:"Warm", energy:"Powerhouse" },
-        LeeKnow: { attractive:"Cool", comfort:"Quiet", trust:"Mysterious", miss:"Silence", emotional:"Hidden", lovable:"Funny shock", energy:"Controlled" },
-        Felix: { attractive:"Soft voice", comfort:"Gentle", trust:"Kind", miss:"Sunshine", emotional:"Pure", lovable:"Cute chaos", energy:"Bright" },
-        Hyunjin: { attractive:"Artistic", comfort:"Emotional", trust:"Deep", miss:"Presence", emotional:"Intense", lovable:"Drama cute", energy:"Flow" }
-    },
+   STRAYKIDS: {
+    BangChan: { attractive:"Leader energy", comfort:"Protective", trust:"Strong", miss:"Guidance", emotional:"Deep", lovable:"Warm", energy:"Power" },
+    LeeKnow: { attractive:"Cool", comfort:"Quiet", trust:"Mysterious", miss:"Silence", emotional:"Hidden", lovable:"Funny shock", energy:"Controlled" },
+    Changbin: { attractive:"Powerful", comfort:"Strong", trust:"Reliable", miss:"Intensity", emotional:"Deep", lovable:"Tough soft", energy:"Aggressive" },
+    Hyunjin: { attractive:"Artistic", comfort:"Emotional", trust:"Deep", miss:"Presence", emotional:"Intense", lovable:"Drama cute", energy:"Flow" },
+    Han: { attractive:"Funny charm", comfort:"Playful", trust:"Loyal", miss:"Chaos", emotional:"Mixed", lovable:"Cute chaos", energy:"Fast" },
+    Felix: { attractive:"Soft voice", comfort:"Gentle", trust:"Kind", miss:"Sunshine", emotional:"Pure", lovable:"Angel", energy:"Bright" },
+    Seungmin: { attractive:"Calm", comfort:"Stable", trust:"Honest", miss:"Balance", emotional:"Soft", lovable:"Sweet", energy:"Steady" },
+    I.N: { attractive:"Cute", comfort:"Shy", trust:"Pure", miss:"Youth", emotional:"Soft", lovable:"Baby charm", energy:"Light" }
+}
 
     ITZY: {
-        Yeji: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Focus", emotional:"Determined", lovable:"Cool cute", energy:"Sharp" },
-        Lia: { attractive:"Soft beauty", comfort:"Calm", trust:"Gentle", miss:"Warmth", emotional:"Sensitive", lovable:"Sweet", energy:"Light" },
-        Ryujin: { attractive:"Cool swag", comfort:"Neutral", trust:"Confident", miss:"Attitude", emotional:"Hidden soft", lovable:"Chill funny", energy:"Bold" },
-        Yuna: { attractive:"Bright visual", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Aegyo queen", energy:"High"
-        }
-    }
+    Yeji: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Focus", emotional:"Determined", lovable:"Cool cute", energy:"Sharp" },
+    Lia: { attractive:"Soft beauty", comfort:"Calm", trust:"Gentle", miss:"Warmth", emotional:"Sensitive", lovable:"Sweet", energy:"Light" },
+    Ryujin: { attractive:"Cool swag", comfort:"Neutral", trust:"Confident", miss:"Attitude", emotional:"Hidden soft", lovable:"Chill funny", energy:"Bold" },
+    Chaeryeong: { attractive:"Graceful", comfort:"Soft", trust:"Kind", miss:"Dance", emotional:"Gentle", lovable:"Shy cute", energy:"Flow" },
+    Yuna: { attractive:"Bright visual", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Aegyo queen", energy:"High" }
+}
 };
 
 /* ================= STATE ================= */
