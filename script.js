@@ -6,6 +6,18 @@ const groups = {
         Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
         Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
     },
+    SEVENTEEN: {
+    SCoups: { attractive:"Leader power", comfort:"Protective", trust:"Strong", miss:"Guidance", emotional:"Deep", lovable:"Strong soft", energy:"Commanding" },
+    Jeonghan: { attractive:"Angel charm", comfort:"Calm", trust:"Tricky soft", miss:"Smile", emotional:"Gentle", lovable:"Sweet trickster", energy:"Light" },
+    Joshua: { attractive:"Gentle elegance", comfort:"Peaceful", trust:"Kind", miss:"Warmth", emotional:"Soft", lovable:"Calm angel", energy:"Smooth" },
+    Jun: { attractive:"Mystic aura", comfort:"Quiet", trust:"Reserved", miss:"Silence", emotional:"Deep", lovable:"Unique charm", energy:"Flow" },
+    Hoshi: { attractive:"Tiger energy", comfort:"Fun", trust:"Loyal", miss:"Chaos", emotional:"Passion", lovable:"Cute wild", energy:"Explosive" },
+    Woozi: { attractive:"Creative genius", comfort:"Silent focus", trust:"Deep", miss:"Music", emotional:"Complex", lovable:"Shy genius", energy:"Controlled" },
+    DK: { attractive:"Bright sunshine", comfort:"Happy", trust:"Friendly", miss:"Laugh", emotional:"Joyful", lovable:"Goofy love", energy:"High" },
+    Mingyu: { attractive:"Tall charm", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft deep", lovable:"Big puppy", energy:"Strong" },
+    Vernon: { attractive:"Cool mixed aura", comfort:"Relaxed", trust:"Neutral", miss:"Voice", emotional:"Detached soft", lovable:"Chill funny", energy:"Low cool" },
+    Dino: { attractive:"Young energy", comfort:"Playful", trust:"Growing", miss:"Youth", emotional:"Bright", lovable:"Baby energy", energy:"Fast" }
+},
     STRAYKIDS: {
     BangChan: { attractive:"Leader strength", comfort:"Protective", trust:"Reliable", miss:"Guidance", emotional:"Deep", lovable:"Warm leader", energy:"Powerful" },
     LeeKnow: { attractive:"Cool mystery", comfort:"Quiet", trust:"Unpredictable", miss:"Silence", emotional:"Hidden", lovable:"Funny shock", energy:"Controlled" },
