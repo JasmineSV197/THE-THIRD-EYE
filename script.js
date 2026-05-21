@@ -1,11 +1,8 @@
-/* ================= SAFE START ================= */
-document.addEventListener("DOMContentLoaded", () => {
-
+/* ================= FIREBASE ================= */
 window.onerror = function(msg, url, line) {
     console.log("ERROR:", msg, "LINE:", line);
 };
 
-/* ================= FIREBASE ================= */
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "the-third-eye-69578.firebaseapp.com",
@@ -15,15 +12,14 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 /* ================= SAVE ================= */
 function saveToFirebase(data){
-    return db.collection("thirdEyeResults")
+    if (!db) return;
+
+    db.collection("thirdEyeResults")
     .add(data)
     .then(() => console.log("Saved ✔"))
     .catch(err => console.error("Save error:", err));
@@ -55,62 +51,36 @@ const extraResult = document.getElementById("extraResult");
 const usernameInput = document.getElementById("username");
 const selectedGroupTitle = document.getElementById("selectedGroupTitle");
 
-/* ================= ENTER FIX ================= */
-usernameInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        startBtn.click();
-    }
-});
-
-/* ================= DATA (UNCHANGED) ================= */
+/* ================= DATA ================= */
 const groups = {
-  BLACKPINK: {
-    Lisa: { attractive:"Confident", comfort:"Fun", trust:"Loyal", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
-    Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
-    Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
-    Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
-  },
+    BLACKPINK: {
+        Lisa: { attractive:"Confident", comfort:"Fun", trust:"Loyal", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
+        Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
+        Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
+        Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
+    },
 
-  BTS: {
-    Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
-    V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Unique", energy:"Dreamy" },
-    Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
-    RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
-    Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
-    Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
-    JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
-  },
+    BTS: {
+        Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
+        V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Unique", energy:"Dreamy" },
+        Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
+        RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
+        Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
+        Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
+        JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
+    },
 
-  TWICE: {
-    Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
-    Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
-    Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
-    Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
-    Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" },
-    Mina: { attractive:"Elegant", comfort:"Quiet", trust:"Gentle", miss:"Grace", emotional:"Soft", lovable:"Calm beauty", energy:"Smooth" },
-    Dahyun: { attractive:"Funny charm", comfort:"Bright", trust:"Honest", miss:"Laugh", emotional:"Playful", lovable:"Goofy", energy:"Cheerful" },
-    Chaeyoung: { attractive:"Artistic", comfort:"Cool", trust:"Unique", miss:"Creativity", emotional:"Deep", lovable:"Creative", energy:"Free" },
-    Tzuyu: { attractive:"Visual", comfort:"Calm", trust:"Reserved", miss:"Presence", emotional:"Soft", lovable:"Gentle", energy:"Quiet" }
-  },
-
-  STRAYKIDS: {
-    BangChan: { attractive:"Leader energy", comfort:"Protective", trust:"Strong", miss:"Guidance", emotional:"Deep", lovable:"Warm", energy:"Power" },
-    LeeKnow: { attractive:"Cool", comfort:"Quiet", trust:"Mysterious", miss:"Silence", emotional:"Hidden", lovable:"Funny shock", energy:"Controlled" },
-    Changbin: { attractive:"Powerful", comfort:"Strong", trust:"Reliable", miss:"Intensity", emotional:"Deep", lovable:"Tough soft", energy:"Aggressive" },
-    Hyunjin: { attractive:"Artistic", comfort:"Emotional", trust:"Deep", miss:"Presence", emotional:"Intense", lovable:"Drama cute", energy:"Flow" },
-    Han: { attractive:"Funny charm", comfort:"Playful", trust:"Loyal", miss:"Chaos", emotional:"Mixed", lovable:"Cute chaos", energy:"Fast" },
-    Felix: { attractive:"Soft voice", comfort:"Gentle", trust:"Kind", miss:"Sunshine", emotional:"Pure", lovable:"Angel", energy:"Bright" },
-    Seungmin: { attractive:"Calm", comfort:"Stable", trust:"Honest", miss:"Balance", emotional:"Soft", lovable:"Sweet", energy:"Steady" },
-    I.N: { attractive:"Cute", comfort:"Shy", trust:"Pure", miss:"Youth", emotional:"Soft", lovable:"Baby charm", energy:"Light" }
-  },
-
-  ITZY: {
-    Yeji: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Focus", emotional:"Determined", lovable:"Cool cute", energy:"Sharp" },
-    Lia: { attractive:"Soft beauty", comfort:"Calm", trust:"Gentle", miss:"Warmth", emotional:"Sensitive", lovable:"Sweet", energy:"Light" },
-    Ryujin: { attractive:"Cool swag", comfort:"Neutral", trust:"Confident", miss:"Attitude", emotional:"Hidden soft", lovable:"Chill funny", energy:"Bold" },
-    Chaeryeong: { attractive:"Graceful", comfort:"Soft", trust:"Kind", miss:"Dance", emotional:"Gentle", lovable:"Shy cute", energy:"Flow" },
-    Yuna: { attractive:"Bright visual", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Aegyo queen", energy:"High" }
-  }
+    TWICE: {
+        Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
+        Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
+        Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
+        Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
+        Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" },
+        Mina: { attractive:"Elegant", comfort:"Quiet", trust:"Gentle", miss:"Grace", emotional:"Soft", lovable:"Calm beauty", energy:"Smooth" },
+        Dahyun: { attractive:"Funny charm", comfort:"Bright", trust:"Honest", miss:"Laugh", emotional:"Playful", lovable:"Goofy", energy:"Cheerful" },
+        Chaeyoung: { attractive:"Artistic", comfort:"Cool", trust:"Unique", miss:"Creativity", emotional:"Deep", lovable:"Creative", energy:"Free" },
+        Tzuyu: { attractive:"Visual", comfort:"Calm", trust:"Reserved", miss:"Presence", emotional:"Soft", lovable:"Gentle", energy:"Quiet" }
+    }
 };
 
 /* ================= STATE ================= */
@@ -120,7 +90,7 @@ let currentQuestion = 0;
 let score = {A:0,B:0};
 let directChoice = "";
 
-/* ================= SCREEN SWITCH ================= */
+/* ================= SCREEN ================= */
 function showScreen(screen){
     [intro, groupScreen, memberScreen, quiz, loading, result]
         .forEach(s => s.classList.remove("active"));
@@ -136,6 +106,13 @@ startBtn.onclick = () => {
     generateGroups();
     showScreen(groupScreen);
 };
+
+/* ENTER KEY FIX 🔥 */
+usernameInput.addEventListener("keydown", (e) => {
+    if(e.key === "Enter"){
+        startBtn.click();
+    }
+});
 
 /* ================= GROUPS ================= */
 function generateGroups(){
@@ -159,27 +136,13 @@ function generateGroups(){
     });
 }
 
-/* ================= CONTINUE ================= */
+/* ================= GROUP CONTINUE ================= */
 groupContinueBtn.onclick = () => {
     if(!selectedGroup) return alert("Choose group");
     showMemberScreen();
 };
 
-memberContinueBtn.onclick = () => {
-    if(selectedPair.length !== 2){
-        alert("Choose 2 members");
-        return;
-    }
-
-    currentQuestion = 0;
-    score = {A:0,B:0};
-    directChoice = "";
-
-    showScreen(quiz);
-    loadQuestion();
-};
-
-/* ================= MEMBER SCREEN ================= */
+/* ================= MEMBERS ================= */
 function showMemberScreen(){
     showScreen(memberScreen);
 
@@ -207,7 +170,23 @@ function showMemberScreen(){
     });
 }
 
-/* ================= QUESTIONS ================= */
+/* ================= CONTINUE ================= */
+memberContinueBtn.onclick = () => {
+
+    if(selectedPair.length !== 2){
+        alert("Choose 2 members");
+        return;
+    }
+
+    currentQuestion = 0;
+    score = {A:0,B:0};
+    directChoice = "";
+
+    showScreen(quiz);
+    loadQuestion();
+};
+
+/* ================= QUESTIONS (UNCHANGED) ================= */
 function getQuestions(){
     const A = groups[selectedGroup][selectedPair[0]];
     const B = groups[selectedGroup][selectedPair[1]];
@@ -229,6 +208,8 @@ function getQuestions(){
 
 /* ================= LOAD ================= */
 function loadQuestion(){
+
+    if(selectedPair.length !== 2) return; // 🔥 FIX BLANK CRASH
 
     const q = getQuestions()[currentQuestion];
     questionText.innerText = q.q;
@@ -287,9 +268,7 @@ function showResult(){
 `${usernameInput.value}
 
 Conscious Choice: ${conscious}
-Subconscious Preference: ${subconscious} — ${percent}%
-
-⚠️ Contradiction detected.`;
+Subconscious Preference: ${subconscious} — ${percent}%`;
 
     } else {
 
@@ -297,9 +276,7 @@ Subconscious Preference: ${subconscious} — ${percent}%
 `${usernameInput.value}
 
 Conscious Choice: ${conscious}
-Subconscious Preference: ${subconscious} — ${percent}%
-
-✔ Alignment detected.`;
+Subconscious Preference: ${subconscious} — ${percent}%`;
     }
 
     resultText.innerText = statement;
@@ -331,5 +308,3 @@ restartBtn.onclick = () => {
 
     showScreen(intro);
 };
-
-}); // 👈 SAFE END
