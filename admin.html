@@ -1,60 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>THIRD EYE ADMIN</title>
+<title>THIRD EYE ADMIN</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            background: #0b0b0b;
-            color: white;
-            padding: 20px;
-        }
+<style>
+body {
+    font-family: Arial;
+    background: #0b0b0b;
+    color: white;
+    padding: 20px;
+}
 
-        h1 {
-            color: #00ffcc;
-        }
+h1 { color: #00ffcc; }
 
-        #loginBox {
-            margin-top: 50px;
-            text-align: center;
-        }
+#loginBox {
+    margin-top: 50px;
+}
 
-        input {
-            padding: 10px;
-            font-size: 16px;
-        }
+input, button {
+    padding: 10px;
+    margin: 5px;
+}
 
-        button {
-            padding: 10px 15px;
-            margin-left: 5px;
-            cursor: pointer;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+th, td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+}
 
-        th, td {
-            border: 1px solid #333;
-            padding: 10px;
-            text-align: center;
-        }
+th { background: #111; }
 
-        th {
-            background: #111;
-        }
-
-        tr:nth-child(even) {
-            background: #1a1a1a;
-        }
-
-        #panel {
-            display: none;
-        }
-    </style>
+tr:nth-child(even) { background: #1a1a1a; }
+</style>
 </head>
 
 <body>
@@ -63,37 +46,50 @@
 
 <!-- 🔐 LOGIN -->
 <div id="loginBox">
-    <h3>Enter 4-digit Admin PIN</h3>
-    <input id="pinInput" type="password" placeholder="****">
-    <button onclick="checkPIN()">ENTER</button>
+    <input type="password" id="pass" placeholder="Enter admin password">
+    <button onclick="login()">Enter</button>
 </div>
 
-<!-- 📊 DATA PANEL -->
-<div id="panel">
-
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Group</th>
-                <th>Pair</th>
-                <th>Result</th>
-                <th>%</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-
-        <tbody id="data"></tbody>
-    </table>
-
+<!-- DATA TABLE -->
+<div id="panel" style="display:none;">
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Pair</th>
+            <th>Conscious</th>
+            <th>Subconscious</th>
+            <th>%</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody id="data"></tbody>
+</table>
 </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-/* 🔥 FIREBASE CONFIG */
+const ADMIN_PASS = "1997"; // 👈 CHANGE THIS PASSWORD
+
+function login(){
+    const val = document.getElementById("pass").value;
+
+    if(val !== ADMIN_PASS){
+        alert("Wrong password");
+        return;
+    }
+
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+
+    loadData();
+}
+
+/* FIREBASE */
 const firebaseConfig = {
     apiKey: "YOUR_KEY",
     authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -106,62 +102,32 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* 🔐 PIN */
-const ADMIN_PIN = "1997";
+const table = document.getElementById("data");
 
-/* LOGIN CHECK */
-function checkPIN(){
-
-    const input = document.getElementById("pinInput").value;
-
-    if(input !== ADMIN_PIN){
-        alert("Wrong PIN ❌");
-        return;
-    }
-
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("panel").style.display = "block";
-
-    loadData();
-}
-
-/* 📊 LOAD FIREBASE DATA */
 function loadData(){
 
-    const table = document.getElementById("data");
+db.collection("thirdEyeResults")
+.orderBy("time", "desc")
+.onSnapshot(snapshot => {
 
-    db.collection("thirdEyeResults")
-    .orderBy("time", "desc")
-    .onSnapshot(snapshot => {
+    table.innerHTML = "";
 
-        table.innerHTML = "";
+    snapshot.forEach(doc => {
+        const d = doc.data();
 
-        snapshot.forEach(doc => {
-            const d = doc.data();
-
-            const pairText = Array.isArray(d.pair)
-                ? d.pair.join(" vs ")
-                : "-";
-
-            let timeText = "-";
-
-            if(d.time?.seconds){
-                timeText = new Date(d.time.seconds * 1000).toLocaleString();
-            }
-
-            table.innerHTML += `
-                <tr>
-                    <td>${d.name || ""}</td>
-                    <td>${d.group || ""}</td>
-                    <td>${pairText}</td>
-                    <td>${d.result || d.subconscious || ""}</td>
-                    <td>${d.percent || 0}%</td>
-                    <td>${timeText}</td>
-                </tr>
-            `;
-        });
-
+        table.innerHTML += `
+        <tr>
+            <td>${d.name || "-"}</td>
+            <td>${d.group || "-"}</td>
+            <td>${(d.pair || []).join(" vs ")}</td>
+            <td>${d.conscious || "-"}</td>
+            <td>${d.subconscious || "-"}</td>
+            <td>${d.percent || "-"}</td>
+            <td>${d.time?.toDate ? d.time.toDate().toLocaleString() : ""}</td>
+        </tr>`;
     });
+
+});
 }
 </script>
 
