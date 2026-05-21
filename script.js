@@ -1,10 +1,10 @@
 /* ================= FIREBASE ================= */
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "YOUR_KEY",
     authDomain: "the-third-eye-69578.firebaseapp.com",
     projectId: "the-third-eye-69578",
     storageBucket: "the-third-eye-69578.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
+    messagingSenderId: "YOUR_ID",
     appId: "YOUR_APP_ID"
 };
 
@@ -259,16 +259,16 @@ Subconscious Preference: ${subconscious} — ${percent}%
     `;
 
     /* SAVE */
-    saveToFirebase({
-        name: usernameInput.value,
-        group: selectedGroup,
-        pair: selectedPair,
-        conscious,
-        subconscious,
-        indirect,
-        percent,
-        time: new Date()
-    });
+   saveToFirebase({
+    name: usernameInput.value,
+    group: selectedGroup,
+    pair: selectedPair,
+    conscious,
+    subconscious,
+    indirect,
+    percent,
+    time: new Date()
+});
 }
 
 
@@ -282,3 +282,9 @@ restartBtn.onclick = () => {
 
     showScreen(intro);
 };
+function saveToFirebase(data){
+    db.collection("thirdEyeResults")
+    .add(data)
+    .then(() => console.log("Saved to Firestore ✔"))
+    .catch(err => console.error("Save error:", err));
+}
