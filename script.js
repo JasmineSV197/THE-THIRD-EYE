@@ -355,3 +355,18 @@ restartBtn.onclick = () => {
 
     showScreen(intro);
 };
+document.addEventListener("DOMContentLoaded", () => {
+
+    const usernameInput = document.getElementById("username");
+    const startBtn = document.getElementById("startBtn");
+
+    if (!usernameInput || !startBtn) return;
+
+    usernameInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault(); // 🔥 important fix
+            startBtn.click();
+        }
+    });
+
+});
