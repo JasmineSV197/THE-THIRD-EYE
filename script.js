@@ -1,21 +1,22 @@
 /* ================= FIREBASE ================= */
 const firebaseConfig = {
-    apiKey: "YOUR_KEY",
+    apiKey: "YOUR_API_KEY",
     authDomain: "the-third-eye-69578.firebaseapp.com",
     projectId: "the-third-eye-69578",
     storageBucket: "the-third-eye-69578.appspot.com",
-    messagingSenderId: "YOUR_ID",
+    messagingSenderId: "YOUR_SENDER_ID",
     appId: "YOUR_APP_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* SAVE FUNCTION */
+/* ================= SAVE ================= */
 function saveToFirebase(data){
-    db.collection("thirdEyeResults").add(data)
+    return db.collection("thirdEyeResults")
+    .add(data)
     .then(() => console.log("Saved ✔"))
-    .catch(err => console.log("Firebase error:", err));
+    .catch(err => console.error("Save error:", err));
 }
 
 /* ================= ELEMENTS ================= */
@@ -52,6 +53,7 @@ const groups = {
         Rosé: { attractive:"Gentle", comfort:"Sweet", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Cute", energy:"Dreamy" },
         Jisoo: { attractive:"Calm", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Safe", lovable:"Funny calm", energy:"Balanced" }
     },
+
     BTS: {
         Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Passionate" },
         V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Cute strange", energy:"Dreamy" },
@@ -109,10 +111,24 @@ function generateGroups(){
     });
 }
 
-/* ================= GROUP CONTINUE ================= */
+/* ================= CONTINUE ================= */
 groupContinueBtn.onclick = () => {
     if(!selectedGroup) return alert("Choose group");
     showMemberScreen();
+};
+
+memberContinueBtn.onclick = () => {
+    if(selectedPair.length !== 2){
+        alert("Choose 2 members");
+        return;
+    }
+
+    currentQuestion = 0;
+    score = {A:0,B:0};
+    directChoice = "";
+
+    showScreen(quiz);
+    loadQuestion();
 };
 
 /* ================= MEMBER SCREEN ================= */
@@ -124,6 +140,7 @@ function showMemberScreen(){
     selectedPair = [];
 
     Object.keys(groups[selectedGroup]).forEach(name => {
+
         const div = document.createElement("div");
         div.className = "pairOption";
         div.innerText = name;
@@ -141,21 +158,6 @@ function showMemberScreen(){
         memberButtons.appendChild(div);
     });
 }
-
-/* ================= CONTINUE ================= */
-memberContinueBtn.onclick = () => {
-    if(selectedPair.length !== 2){
-        alert("Choose 2 members");
-        return;
-    }
-
-    currentQuestion = 0;
-    score = {A:0,B:0};
-    directChoice = "";
-
-    showScreen(quiz);
-    loadQuestion();
-};
 
 /* ================= QUESTIONS ================= */
 function getQuestions(){
@@ -179,6 +181,7 @@ function getQuestions(){
 
 /* ================= LOAD ================= */
 function loadQuestion(){
+
     const q = getQuestions()[currentQuestion];
     questionText.innerText = q.q;
 
@@ -212,7 +215,7 @@ function analyze(){
     setTimeout(showResult, 2000);
 }
 
-/* ================= RESULT ================= */
+/* ================= RESULT (UNCHANGED LOGIC) ================= */
 function showResult(){
 
     showScreen(result);
@@ -258,19 +261,17 @@ Subconscious Preference: ${subconscious} — ${percent}%
         <br><b>Deep Match:</b> ${subconscious}
     `;
 
-    /* SAVE */
-   saveToFirebase({
-    name: usernameInput.value,
-    group: selectedGroup,
-    pair: selectedPair,
-    conscious,
-    subconscious,
-    indirect,
-    percent,
-    time: new Date()
-});
+    saveToFirebase({
+        name: usernameInput.value,
+        group: selectedGroup,
+        pair: selectedPair,
+        conscious,
+        subconscious,
+        indirect,
+        percent,
+        time: new Date()
+    });
 }
-
 
 /* ================= RESTART ================= */
 restartBtn.onclick = () => {
@@ -282,9 +283,3 @@ restartBtn.onclick = () => {
 
     showScreen(intro);
 };
-function saveToFirebase(data){
-    db.collection("thirdEyeResults")
-    .add(data)
-    .then(() => console.log("Saved to Firestore ✔"))
-    .catch(err => console.error("Save error:", err));
-}
