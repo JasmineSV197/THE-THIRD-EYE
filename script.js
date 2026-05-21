@@ -43,7 +43,6 @@ const groups = {
     Han: { attractive:"Funny chaos", comfort:"Playful", trust:"Loyal", miss:"Energy", emotional:"Mixed feelings", lovable:"Cute chaos", energy:"Fast" },
     Felix: { attractive:"Soft aura", comfort:"Gentle", trust:"Kind", miss:"Sunshine", emotional:"Pure", lovable:"Angel vibe", energy:"Bright" },
     Seungmin: { attractive:"Calm charm", comfort:"Stable", trust:"Honest", miss:"Balance", emotional:"Soft", lovable:"Sweet calm", energy:"Steady" },
-    I.N: { attractive:"Cute innocence", comfort:"Shy warmth", trust:"Pure", miss:"Youth", emotional:"Soft", lovable:"Baby charm", energy:"Light" }
   },
 
   ITZY: {
