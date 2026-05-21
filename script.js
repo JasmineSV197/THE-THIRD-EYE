@@ -55,7 +55,7 @@ const groups = {
     Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
     Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
     Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
-},
+}
 
   BTS: {
     Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
