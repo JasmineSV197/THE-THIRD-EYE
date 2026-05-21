@@ -8,8 +8,8 @@ const groups = {
     },
 
     BTS: {
-        Jungkook: { attractive:"Perfection", comfort:"Playful", trust:"Loyality", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Quiet devotion" },
-        V: { attractive:"Artistic", comfort:"Calm", trust:"Care", miss:"Presence", emotional:"Soft", lovable:"Quiet emotions", energy:"Playfulness" },
+        Jungkook: { attractive:"Perfection", comfort:"Actions", trust:"Loyalty", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Quiet devotion" },
+        V: { attractive:"Artistic", comfort:"Touch", trust:"Care", miss:"Presence", emotional:"Soft", lovable:"Quiet emotions", energy:"Playfulness" },
         Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
         RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
         Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
