@@ -406,13 +406,8 @@ function loadQuestion(){
 }
 
 /* ANALYZE */
-function analyze(){
-    showScreen(loading);
-    setTimeout(showResult, 2000);
-}
-
-/* RESULT + FIREBASE */
 function showResult(){
+
     showScreen(result);
 
     const subconscious =
@@ -424,22 +419,51 @@ function showResult(){
     const indirect =
         score.A >= score.B ? selectedPair[0] : selectedPair[1];
 
-    resultText.innerText =
+    const conscious = directChoice || "Not selected";
+
+    /* CLEAR EVERYTHING FIRST */
+    resultText.innerText = "";
+    extraResult.innerHTML = "";
+
+    /* FINAL STATEMENT (ONLY ONE PLACE FOR IT) */
+    let statement = "";
+
+    if(subconscious !== conscious){
+
+        statement =
 `${usernameInput.value}
 
-Conscious: ${directChoice}
-Subconscious: ${subconscious} — ${percent}%`;
+Conscious Choice: ${conscious}
+Subconscious Preference: ${subconscious} — ${percent}%
 
-    extraResult.innerHTML =
-`Indirect Preference: ${indirect}
-<br>Subconscious Match: ${subconscious}`;
+⚠️ Contradiction detected.
+Your inner pattern differs from your final decision.`;
 
-    /* SAVE TO FIREBASE */
+    } else {
+
+        statement =
+`${usernameInput.value}
+
+Conscious Choice: ${conscious}
+Subconscious Preference: ${subconscious} — ${percent}%
+
+✔ Alignment detected.
+Your decision matches your subconscious pattern.`;
+    }
+
+    resultText.innerText = statement;
+
+    extraResult.innerHTML = `
+        <div><b>Most Indirectly Preferred:</b> ${indirect}</div>
+        <div><b>Deep Pattern Match:</b> ${subconscious}</div>
+    `;
+
+    /* SAVE */
     db.collection("thirdEyeResults").add({
         name: usernameInput.value,
         group: selectedGroup,
         pair: selectedPair,
-        conscious: directChoice,
+        conscious,
         subconscious,
         indirect,
         percent,
