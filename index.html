@@ -3,207 +3,114 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
+<title>THIRD EYE</title>
 
-    <title>THIRD EYE</title>
+<link rel="stylesheet" href="style.css">
 
-    <link rel="stylesheet"
-    href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-    rel="stylesheet">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- INTRO -->
+<!-- INTRO -->
+<section id="intro" class="screen active">
+    <h1>THIRD EYE</h1>
+    <p class="tagline">The subconscious remembers.</p>
 
-        <section
-        id="intro"
-        class="screen active">
+    <input type="text" id="username" placeholder="Enter your name">
+    <button id="startBtn">ENTER</button>
+</section>
 
-            <h1>
-                THIRD EYE
-            </h1>
+<!-- GROUP SELECT -->
+<section id="groupScreen" class="screen">
 
-            <p class="tagline">
-                The subconscious remembers.
-            </p>
+    <h2 class="pairTitle">Choose Group</h2>
 
-            <input
-            type="text"
-            id="username"
-            placeholder="Enter your name">
+    <div id="groupButtons" class="pairButtons"></div>
 
-            <button id="startBtn">
-                ENTER
-            </button>
+    <button id="groupContinueBtn">CONTINUE</button>
 
-        </section>
+</section>
 
+<!-- MODE (optional future use) -->
+<section id="modeScreen" class="screen">
 
+    <h2 class="pairTitle">Choose Mode</h2>
 
-        <!-- GROUP SELECT -->
+    <div class="modeButtons">
 
-        <section
-        id="groupScreen"
-        class="screen">
+        <button id="groupModeBtn" class="modeBtn">
+            GROUP COMPARISON (LOCKED)
+        </button>
 
-            <h2 class="pairTitle">
-                Choose Group
-            </h2>
-
-            <div
-            class="pairButtons"
-            id="groupButtons">
-
-            </div>
-
-            <button id="groupContinueBtn">
-                CONTINUE
-            </button>
-
-        </section>
-
-
-
-        <!-- MODE SELECT -->
-
-        <section
-        id="modeScreen"
-        class="screen">
-
-            <h2 class="pairTitle">
-                Choose Mode
-            </h2>
-
-            <div class="modeButtons">
-
-                <button
-                class="modeBtn"
-                id="groupModeBtn">
-
-                    GROUP COMPARISON
-
-                </button>
-
-                <button
-                class="modeBtn"
-                id="memberModeBtn">
-
-                    MEMBER COMPARISON
-
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- MEMBER SELECT -->
-
-        <section
-        id="memberScreen"
-        class="screen">
-
-            <h2 class="pairTitle">
-                Choose Two Members
-            </h2>
-
-            <div id="selectedGroupTitle">
-
-            </div>
-
-            <div
-            class="pairButtons"
-            id="memberButtons">
-
-            </div>
-
-            <button id="memberContinueBtn">
-                CONTINUE
-            </button>
-
-        </section>
-
-
-
-        <!-- QUIZ -->
-
-        <section
-        id="quiz"
-        class="screen">
-
-            <div class="questionBox">
-
-                <h2 id="questionText">
-                    Question
-                </h2>
-
-                <div id="options">
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- LOADING -->
-
-        <section
-        id="loading"
-        class="screen">
-
-            <h2>
-                Analyzing subconscious patterns...
-            </h2>
-
-            <div class="loader">
-
-            </div>
-
-        </section>
-
-
-
-        <!-- RESULT -->
-
-        <section
-        id="result"
-        class="screen">
-
-            <h2>
-                ANALYSIS COMPLETE
-            </h2>
-
-            <p id="resultText">
-
-            </p>
-
-            <div id="extraResult">
-
-            </div>
-
-            <button id="restartBtn">
-                Restart
-            </button>
-
-        </section>
+        <button id="memberModeBtn" class="modeBtn">
+            MEMBER COMPARISON
+        </button>
 
     </div>
 
-    <script src="script.js"></script>
+</section>
+
+<!-- MEMBER SELECT -->
+<section id="memberScreen" class="screen">
+
+    <h2 class="pairTitle">Choose Two Members</h2>
+
+    <div id="selectedGroupTitle"></div>
+
+    <div id="memberButtons" class="pairButtons"></div>
+
+    <button id="memberContinueBtn">CONTINUE</button>
+
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="screen">
+
+    <div class="questionBox">
+
+        <h2 id="questionText">Question</h2>
+
+        <div id="options"></div>
+
+    </div>
+
+</section>
+
+<!-- LOADING -->
+<section id="loading" class="screen">
+
+    <h2>Analyzing subconscious patterns...</h2>
+    <div class="loader"></div>
+
+</section>
+
+<!-- RESULT -->
+<section id="result" class="screen">
+
+    <h2>ANALYSIS COMPLETE</h2>
+
+    <p id="resultText"></p>
+
+    <div id="extraResult"></div>
+
+    <button id="restartBtn">Restart</button>
+
+</section>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
