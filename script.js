@@ -1,4 +1,7 @@
 /* ================= FIREBASE ================= */
+window.onerror = function(msg, url, line) {
+    console.log("ERROR:", msg, "LINE:", line);
+};
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "the-third-eye-69578.firebaseapp.com",
