@@ -1,4 +1,9 @@
-/* ================= FIREBASE ================= */
+/* ================= GLOBAL SAFETY ================= */
+window.onerror = function(msg, url, line) {
+    console.log("ERROR:", msg, "LINE:", line);
+};
+
+/* ================= GROUP DATA (UNCHANGED) ================= */
 const groups = {
 
   BLACKPINK: {
@@ -9,14 +14,14 @@ const groups = {
   },
 
   BTS: {
-        Jungkook: { attractive:"Perfection", comfort:"Actions", trust:"Loyalty", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Quiet devotion" },
-        V: { attractive:"Artistic", comfort:"Touch", trust:"Care", miss:"Presence", emotional:"Soft", lovable:"Quiet emotions", energy:"Playfulness" },
-        Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
-        RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
-        Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
-        Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
-        JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
-    },
+    Jungkook: { attractive:"Perfection", comfort:"Actions", trust:"Loyalty", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Quiet devotion" },
+    V: { attractive:"Artistic", comfort:"Touch", trust:"Care", miss:"Presence", emotional:"Soft", lovable:"Quiet emotions", energy:"Playfulness" },
+    Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
+    RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
+    Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
+    Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
+    JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
+  },
 
   TWICE: {
     Nayeon: { attractive:"Bright charm", comfort:"Playful", trust:"Friendly", miss:"Smile", emotional:"Joyful", lovable:"Aegyo", energy:"Cheerful" },
@@ -67,11 +72,7 @@ const groups = {
 
 };
 
-window.onerror = function(msg, url, line) {
-    console.log("ERROR:", msg, "LINE:", line);
-};
-
-/* SAFE INIT */
+/* ================= FIREBASE SAFE INIT ================= */
 let db = null;
 
 try {
@@ -86,7 +87,6 @@ try {
 
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
-
 } catch (e) {
     console.log("Firebase init failed:", e);
 }
@@ -153,15 +153,13 @@ startBtn.onclick = () => {
 };
 
 /* ENTER FIX */
-usernameInput?.addEventListener("keydown", (e) => {
+usernameInput.addEventListener("keydown", (e) => {
     if(e.key === "Enter") startBtn.click();
 });
 
 /* ================= GROUPS ================= */
 function generateGroups(){
     groupButtons.innerHTML = "";
-
-    if(!groups) return; // safety
 
     Object.keys(groups).forEach(group => {
         const div = document.createElement("div");
@@ -181,10 +179,24 @@ function generateGroups(){
     });
 }
 
-/* ================= GROUP CONTINUE ================= */
+/* ================= CONTINUE ================= */
 groupContinueBtn.onclick = () => {
     if(!selectedGroup) return alert("Choose group");
     showMemberScreen();
+};
+
+memberContinueBtn.onclick = () => {
+    if(selectedPair.length !== 2){
+        alert("Choose 2 members");
+        return;
+    }
+
+    currentQuestion = 0;
+    score = {A:0,B:0};
+    directChoice = "";
+
+    showScreen(quiz);
+    loadQuestion();
 };
 
 /* ================= MEMBER SCREEN ================= */
@@ -215,23 +227,7 @@ function showMemberScreen(){
     });
 }
 
-/* ================= CONTINUE ================= */
-memberContinueBtn.onclick = () => {
-
-    if(selectedPair.length !== 2){
-        alert("Choose 2 members");
-        return;
-    }
-
-    currentQuestion = 0;
-    score = {A:0,B:0};
-    directChoice = "";
-
-    showScreen(quiz);
-    loadQuestion();
-};
-
-/* ================= QUESTIONS (UNCHANGED) ================= */
+/* ================= QUESTIONS ================= */
 function getQuestions(){
     const A = groups[selectedGroup][selectedPair[0]];
     const B = groups[selectedGroup][selectedPair[1]];
@@ -255,7 +251,7 @@ function getQuestions(){
 function loadQuestion(){
 
     if(!selectedPair || selectedPair.length !== 2) return;
-    if(!getQuestions()[currentQuestion]) return; // FIX CRASH
+    if(!getQuestions()[currentQuestion]) return;
 
     const q = getQuestions()[currentQuestion];
     questionText.innerText = q.q;
@@ -309,15 +305,12 @@ function showResult(){
     let statement = "";
 
     if(subconscious !== conscious){
-
         statement =
 `${usernameInput.value}
 
 Conscious Choice: ${conscious}
 Subconscious Preference: ${subconscious} — ${percent}%`;
-
     } else {
-
         statement =
 `${usernameInput.value}
 
