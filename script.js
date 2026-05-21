@@ -6,6 +6,23 @@ const groups = {
         Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
         Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
     },
+    STRAYKIDS: {
+    BangChan: { attractive:"Leader strength", comfort:"Protective", trust:"Reliable", miss:"Guidance", emotional:"Deep", lovable:"Warm leader", energy:"Powerful" },
+    LeeKnow: { attractive:"Cool mystery", comfort:"Quiet", trust:"Unpredictable", miss:"Silence", emotional:"Hidden", lovable:"Funny shock", energy:"Controlled" },
+    Changbin: { attractive:"Strong presence", comfort:"Tough love", trust:"Solid", miss:"Intensity", emotional:"Deep fire", lovable:"Cute savage", energy:"Aggressive" },
+    Hyunjin: { attractive:"Artistic beauty", comfort:"Emotional", trust:"Deep", miss:"Presence", emotional:"Intense", lovable:"Drama cute", energy:"Flow" },
+    Han: { attractive:"Funny chaos", comfort:"Playful", trust:"Loyal", miss:"Energy", emotional:"Mixed feelings", lovable:"Cute chaos", energy:"Fast" },
+    Felix: { attractive:"Soft aura", comfort:"Gentle", trust:"Kind", miss:"Sunshine", emotional:"Pure", lovable:"Angel vibe", energy:"Bright" },
+    Seungmin: { attractive:"Calm charm", comfort:"Stable", trust:"Honest", miss:"Balance", emotional:"Soft", lovable:"Sweet calm", energy:"Steady" },
+    I.N: { attractive:"Cute innocence", comfort:"Shy warmth", trust:"Pure", miss:"Youth", emotional:"Soft", lovable:"Baby charm", energy:"Light" }
+},
+    ITZY: {
+    Yeji: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Focus", emotional:"Determined", lovable:"Cool cute", energy:"Sharp" },
+    Lia: { attractive:"Soft elegance", comfort:"Calm", trust:"Gentle", miss:"Warmth", emotional:"Sensitive", lovable:"Sweet", energy:"Light" },
+    Ryujin: { attractive:"Cool swag", comfort:"Neutral", trust:"Confident", miss:"Attitude", emotional:"Hidden soft", lovable:"Chill funny", energy:"Bold" },
+    Chaeryeong: { attractive:"Graceful", comfort:"Soft", trust:"Kind", miss:"Dance", emotional:"Gentle", lovable:"Shy cute", energy:"Flow" },
+    Yuna: { attractive:"Bright visual", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Aegyo queen", energy:"High" }
+},
 
     BTS: {
         Jungkook: { attractive:"Perfection", comfort:"Actions", trust:"Loyalty", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Quiet devotion" },
