@@ -344,7 +344,7 @@ Subconscious Preference: ${subconscious} — ${percent}%`;
         subconscious,
         indirect,
         percent,
-       time: firebase?.firestore?.FieldValue?.serverTimestamp?.()
+      time: firebase.firestore.FieldValue.serverTimestamp()
     });
 }
 
