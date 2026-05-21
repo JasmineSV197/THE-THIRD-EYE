@@ -159,14 +159,14 @@ function getQuestions(){
     const B = groups[selectedGroup][selectedPair[1]];
 
     return [
-        { q:"Attractive?", a:[{t:A.attractive,v:"A"},{t:B.attractive,v:"B"}] },
-        { q:"Comfort?", a:[{t:A.comfort,v:"A"},{t:B.comfort,v:"B"}] },
-        { q:"Trust?", a:[{t:A.trust,v:"A"},{t:B.trust,v:"B"}] },
-        { q:"Miss?", a:[{t:A.miss,v:"A"},{t:B.miss,v:"B"}] },
-        { q:"Emotion?", a:[{t:A.emotional,v:"A"},{t:B.emotional,v:"B"}] },
-        { q:"Love?", a:[{t:A.lovable,v:"A"},{t:B.lovable,v:"B"}] },
-        { q:"Energy?", a:[{t:A.energy,v:"A"},{t:B.energy,v:"B"}] },
-        { q:"Final Choice?", a:[
+        { q:"What attracts you the most?", a:[{t:A.attractive,v:"A"},{t:B.attractive,v:"B"}] },
+        { q:"What comforts you the most?", a:[{t:A.comfort,v:"A"},{t:B.comfort,v:"B"}] },
+        { q:"How do you define trust?", a:[{t:A.trust,v:"A"},{t:B.trust,v:"B"}] },
+        { q:"What do you need the most?", a:[{t:A.miss,v:"A"},{t:B.miss,v:"B"}] },
+        { q:"How do you define emotion?", a:[{t:A.emotional,v:"A"},{t:B.emotional,v:"B"}] },
+        { q:"How do you define love?", a:[{t:A.lovable,v:"A"},{t:B.lovable,v:"B"}] },
+        { q:"What energy you like?", a:[{t:A.energy,v:"A"},{t:B.energy,v:"B"}] },
+        { q:"Who is you most preffered choice?", a:[
             {t:selectedPair[0],v:"AD"},
             {t:selectedPair[1],v:"BD"}
         ]}
