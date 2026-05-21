@@ -16,12 +16,20 @@ const groups = {
     Seungmin: { attractive:"Calm charm", comfort:"Stable", trust:"Honest", miss:"Balance", emotional:"Soft", lovable:"Sweet calm", energy:"Steady" },
     I.N: { attractive:"Cute innocence", comfort:"Shy warmth", trust:"Pure", miss:"Youth", emotional:"Soft", lovable:"Baby charm", energy:"Light" }
 },
+    
     ITZY: {
     Yeji: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Focus", emotional:"Determined", lovable:"Cool cute", energy:"Sharp" },
     Lia: { attractive:"Soft elegance", comfort:"Calm", trust:"Gentle", miss:"Warmth", emotional:"Sensitive", lovable:"Sweet", energy:"Light" },
     Ryujin: { attractive:"Cool swag", comfort:"Neutral", trust:"Confident", miss:"Attitude", emotional:"Hidden soft", lovable:"Chill funny", energy:"Bold" },
     Chaeryeong: { attractive:"Graceful", comfort:"Soft", trust:"Kind", miss:"Dance", emotional:"Gentle", lovable:"Shy cute", energy:"Flow" },
     Yuna: { attractive:"Bright visual", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Aegyo queen", energy:"High" }
+},
+    LESSERAFIM: {
+    Sakura: { attractive:"Soft elegance", comfort:"Calm", trust:"Gentle", miss:"Quiet presence", emotional:"Subtle", lovable:"Cute calm", energy:"Light dreamy" },
+    Chaewon: { attractive:"Leader charm", comfort:"Supportive", trust:"Reliable", miss:"Warmth", emotional:"Balanced", lovable:"Sweet strong", energy:"Clean power" },
+    Yunjin: { attractive:"Bold aura", comfort:"Expressive", trust:"Honest", miss:"Voice", emotional:"Deep", lovable:"Passionate", energy:"Free fire" },
+    Kazuha: { attractive:"Graceful beauty", comfort:"Peaceful", trust:"Stable", miss:"Silence", emotional:"Soft", lovable:"Elegant calm", energy:"Flow" },
+    Eunchae: { attractive:"Bright innocence", comfort:"Playful", trust:"Pure", miss:"Youth", emotional:"Cheerful", lovable:"Baby charm", energy:"High sparkle" }
 },
 
     BTS: {
@@ -33,6 +41,13 @@ const groups = {
         Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
         JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
     },
+    NEWJEANS: {
+    Minji: { attractive:"Classic beauty", comfort:"Calm leader", trust:"Reliable", miss:"Presence", emotional:"Soft deep", lovable:"Natural charm", energy:"Balanced" },
+    Hanni: { attractive:"Cute unique", comfort:"Warm", trust:"Friendly", miss:"Voice", emotional:"Expressive", lovable:"Adorable", energy:"Bright" },
+    Danielle: { attractive:"Sunshine aura", comfort:"Happy", trust:"Pure", miss:"Smile", emotional:"Joyful", lovable:"Sweet energy", energy:"Radiant" },
+    Haerin: { attractive:"Cat-like charm", comfort:"Quiet", trust:"Reserved", miss:"Silence", emotional:"Soft mysterious", lovable:"Calm cute", energy:"Low smooth" },
+    Hyein: { attractive:"Youth beauty", comfort:"Playful", trust:"Pure", miss:"Energy", emotional:"Fresh", lovable:"Baby charm", energy:"High spark" }
+},
 
     TWICE: {
         Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
