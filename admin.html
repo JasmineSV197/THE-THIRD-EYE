@@ -1,96 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>THIRD EYE ADMIN</title>
-
-<style>
-body {
-    font-family: Arial;
-    background: #0b0b0b;
-    color: white;
-    padding: 20px;
-}
-
-h1 { color: #00ffcc; }
-
-#loginBox { margin-top: 50px; }
-
-input, button {
-    padding: 10px;
-    margin: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    border: 1px solid #333;
-    padding: 10px;
-    text-align: center;
-}
-
-th { background: #111; }
-
-tr:nth-child(even) { background: #1a1a1a; }
-</style>
-</head>
-
-<body>
-
-<h1>👁️ THIRD EYE ADMIN PANEL</h1>
-
-<!-- LOGIN -->
-<div id="loginBox">
-    <input type="password" id="pass" placeholder="Enter admin password">
-    <button id="loginBtn">Enter</button>
-</div>
-
-<!-- PANEL -->
-<div id="panel" style="display:none;">
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Group</th>
-            <th>Pair</th>
-            <th>Conscious</th>
-            <th>Subconscious</th>
-            <th>%</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody id="data"></tbody>
-</table>
-</div>
-
-<!-- FIREBASE -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
 <script>
-
-/* 🔐 ADMIN PASSWORD */
 const ADMIN_PASS = "1997";
 
 document.getElementById("loginBtn").onclick = () => {
-
-    const val = document.getElementById("pass").value;
-
-    if(val !== ADMIN_PASS){
+    if(document.getElementById("pass").value !== ADMIN_PASS){
         alert("Wrong password");
         return;
     }
 
     document.getElementById("loginBox").style.display = "none";
     document.getElementById("panel").style.display = "block";
-
     loadData();
 };
 
-/* 🔥 FIREBASE CONFIG (IMPORTANT) */
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "the-third-eye-69578.firebaseapp.com",
@@ -105,21 +26,15 @@ const db = firebase.firestore();
 
 const table = document.getElementById("data");
 
-/* 📡 REALTIME DATA */
 function loadData(){
-
     db.collection("thirdEyeResults")
-    .orderBy("time", "desc")
+    .orderBy("time","desc")
     .onSnapshot(snapshot => {
 
         table.innerHTML = "";
 
         snapshot.forEach(doc => {
             const d = doc.data();
-
-            const time = d.time?.toDate
-                ? d.time.toDate().toLocaleString()
-                : "N/A";
 
             table.innerHTML += `
                 <tr>
@@ -129,15 +44,11 @@ function loadData(){
                     <td>${d.conscious || "-"}</td>
                     <td>${d.subconscious || "-"}</td>
                     <td>${d.percent || "-"}</td>
-                    <td>${time}</td>
+                    <td>${d.time?.toDate ? d.time.toDate().toLocaleString() : ""}</td>
                 </tr>
             `;
         });
 
     });
 }
-
 </script>
-
-</body>
-</html>
