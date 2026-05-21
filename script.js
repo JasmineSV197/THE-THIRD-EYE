@@ -1,4 +1,34 @@
 /* ================= FIREBASE ================= */
+const groups = {
+    BLACKPINK: {
+        Lisa: { attractive:"Confident", comfort:"Fun", trust:"Loyal", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
+        Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
+        Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
+        Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
+    },
+
+    BTS: {
+        Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
+        V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Unique", energy:"Dreamy" },
+        Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
+        RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
+        Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
+        Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
+        JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
+    },
+
+    TWICE: {
+        Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
+        Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
+        Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
+        Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
+        Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" },
+        Mina: { attractive:"Elegant", comfort:"Quiet", trust:"Gentle", miss:"Grace", emotional:"Soft", lovable:"Calm beauty", energy:"Smooth" },
+        Dahyun: { attractive:"Funny charm", comfort:"Bright", trust:"Honest", miss:"Laugh", emotional:"Playful", lovable:"Goofy", energy:"Cheerful" },
+        Chaeyoung: { attractive:"Artistic", comfort:"Cool", trust:"Unique", miss:"Creativity", emotional:"Deep", lovable:"Creative", energy:"Free" },
+        Tzuyu: { attractive:"Visual", comfort:"Calm", trust:"Reserved", miss:"Presence", emotional:"Soft", lovable:"Gentle", energy:"Quiet" }
+    }
+};
 
 window.onerror = function(msg, url, line) {
     console.log("ERROR:", msg, "LINE:", line);
