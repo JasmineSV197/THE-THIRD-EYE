@@ -51,38 +51,6 @@ const extraResult = document.getElementById("extraResult");
 const usernameInput = document.getElementById("username");
 const selectedGroupTitle = document.getElementById("selectedGroupTitle");
 
-/* ================= DATA ================= */
-const groups = {
-    BLACKPINK: {
-        Lisa: { attractive:"Confident", comfort:"Fun", trust:"Loyal", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
-        Jennie: { attractive:"Elegant", comfort:"Soft", trust:"Reliable", miss:"Aura", emotional:"Deep", lovable:"Stylish", energy:"Classy" },
-        Rosé: { attractive:"Gentle", comfort:"Calm", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Sweet", energy:"Dreamy" },
-        Jisoo: { attractive:"Balanced", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Warm", lovable:"Funny calm", energy:"Graceful" }
-    },
-
-    BTS: {
-        Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Powerful" },
-        V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Unique", energy:"Dreamy" },
-        Jimin: { attractive:"Charming", comfort:"Supportive", trust:"Caring", miss:"Warmth", emotional:"Emotional", lovable:"Cute", energy:"Sweet" },
-        RM: { attractive:"Intelligent", comfort:"Mature", trust:"Wise", miss:"Conversation", emotional:"Deep", lovable:"Clumsy", energy:"Leader" },
-        Jin: { attractive:"Funny", comfort:"Warm", trust:"Reliable", miss:"Presence", emotional:"Soft", lovable:"Dad jokes", energy:"Bright" },
-        Suga: { attractive:"Cold calm", comfort:"Silent", trust:"Honest", miss:"Quiet", emotional:"Deep", lovable:"Savage soft", energy:"Chill" },
-        JHope: { attractive:"Energetic", comfort:"Bright", trust:"Loyal", miss:"Joy", emotional:"Pure", lovable:"Funny", energy:"Sunshine" }
-    },
-
-    TWICE: {
-        Nayeon: { attractive:"Bright", comfort:"Cute", trust:"Friendly", miss:"Smile", emotional:"Happy", lovable:"Playful", energy:"Cheerful" },
-        Jeongyeon: { attractive:"Cool", comfort:"Calm", trust:"Stable", miss:"Balance", emotional:"Strong", lovable:"Soft smile", energy:"Steady" },
-        Momo: { attractive:"Powerful", comfort:"Fun", trust:"Energetic", miss:"Dance", emotional:"Wild", lovable:"Funny", energy:"Explosive" },
-        Sana: { attractive:"Cute charm", comfort:"Sweet", trust:"Soft", miss:"Voice", emotional:"Warm", lovable:"Aegyo", energy:"Sparkle" },
-        Jihyo: { attractive:"Leader aura", comfort:"Strong", trust:"Reliable", miss:"Strength", emotional:"Deep", lovable:"Caring", energy:"Powerful" },
-        Mina: { attractive:"Elegant", comfort:"Quiet", trust:"Gentle", miss:"Grace", emotional:"Soft", lovable:"Calm beauty", energy:"Smooth" },
-        Dahyun: { attractive:"Funny charm", comfort:"Bright", trust:"Honest", miss:"Laugh", emotional:"Playful", lovable:"Goofy", energy:"Cheerful" },
-        Chaeyoung: { attractive:"Artistic", comfort:"Cool", trust:"Unique", miss:"Creativity", emotional:"Deep", lovable:"Creative", energy:"Free" },
-        Tzuyu: { attractive:"Visual", comfort:"Calm", trust:"Reserved", miss:"Presence", emotional:"Soft", lovable:"Gentle", energy:"Quiet" }
-    }
-};
-
 /* ================= STATE ================= */
 let selectedGroup = "";
 let selectedPair = [];
@@ -94,7 +62,8 @@ let directChoice = "";
 function showScreen(screen){
     [intro, groupScreen, memberScreen, quiz, loading, result]
         .forEach(s => s.classList.remove("active"));
-    screen.classList.add("active");
+
+    if(screen) screen.classList.add("active");
 }
 
 /* ================= START ================= */
@@ -107,11 +76,9 @@ startBtn.onclick = () => {
     showScreen(groupScreen);
 };
 
-/* ENTER KEY FIX 🔥 */
-usernameInput.addEventListener("keydown", (e) => {
-    if(e.key === "Enter"){
-        startBtn.click();
-    }
+/* ENTER FIX */
+usernameInput?.addEventListener("keydown", (e) => {
+    if(e.key === "Enter") startBtn.click();
 });
 
 /* ================= GROUPS ================= */
@@ -142,7 +109,7 @@ groupContinueBtn.onclick = () => {
     showMemberScreen();
 };
 
-/* ================= MEMBERS ================= */
+/* ================= MEMBER SCREEN ================= */
 function showMemberScreen(){
     showScreen(memberScreen);
 
@@ -209,7 +176,7 @@ function getQuestions(){
 /* ================= LOAD ================= */
 function loadQuestion(){
 
-    if(selectedPair.length !== 2) return; // 🔥 FIX BLANK CRASH
+    if(selectedPair.length !== 2) return;
 
     const q = getQuestions()[currentQuestion];
     questionText.innerText = q.q;
@@ -244,7 +211,7 @@ function analyze(){
     setTimeout(showResult, 2000);
 }
 
-/* ================= RESULT (UNCHANGED) ================= */
+/* ================= RESULT (UNCHANGED LOGIC) ================= */
 function showResult(){
 
     showScreen(result);
@@ -294,7 +261,7 @@ Subconscious Preference: ${subconscious} — ${percent}%`;
         subconscious,
         indirect,
         percent,
-        time: new Date()
+        time: firebase.firestore.FieldValue.serverTimestamp()
     });
 }
 
