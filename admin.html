@@ -15,6 +15,22 @@
             color: #00ffcc;
         }
 
+        #loginBox {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -35,8 +51,8 @@
             background: #1a1a1a;
         }
 
-        .wrap {
-            overflow-x: auto;
+        #panel {
+            display: none;
         }
     </style>
 </head>
@@ -45,25 +61,34 @@
 
 <h1>👁️ THIRD EYE ADMIN PANEL</h1>
 
-<div class="wrap">
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Group</th>
-            <th>Pair</th>
-            <th>Conscious</th>
-            <th>Subconscious</th>
-            <th>%</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-
-    <tbody id="data"></tbody>
-</table>
+<!-- 🔐 LOGIN -->
+<div id="loginBox">
+    <h3>Enter 4-digit Admin PIN</h3>
+    <input id="pinInput" type="password" placeholder="****">
+    <button onclick="checkPIN()">ENTER</button>
 </div>
 
-<!-- Firebase (compat version = easier + stable) -->
+<!-- 📊 DATA PANEL -->
+<div id="panel">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Group</th>
+                <th>Pair</th>
+                <th>Result</th>
+                <th>%</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+
+        <tbody id="data"></tbody>
+    </table>
+
+</div>
+
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -78,49 +103,66 @@ const firebaseConfig = {
     appId: "XXXX"
 };
 
-/* INIT */
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const table = document.getElementById("data");
+/* 🔐 PIN */
+const ADMIN_PIN = "1997";
 
-/* LIVE LISTENER */
-db.collection("thirdEyeResults")
-.orderBy("time", "desc")
-.onSnapshot(snapshot => {
+/* LOGIN CHECK */
+function checkPIN(){
 
-    table.innerHTML = "";
+    const input = document.getElementById("pinInput").value;
 
-    snapshot.forEach(doc => {
-        const d = doc.data();
+    if(input !== ADMIN_PIN){
+        alert("Wrong PIN ❌");
+        return;
+    }
 
-        // SAFE fallback (prevents crash)
-        const pairText = Array.isArray(d.pair)
-            ? d.pair.join(" vs ")
-            : "N/A";
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("panel").style.display = "block";
 
-        let timeText = "N/A";
+    loadData();
+}
 
-        if (d.time && d.time.seconds) {
-            timeText = new Date(d.time.seconds * 1000).toLocaleString();
-        } else if (d.time && d.time.toDate) {
-            timeText = d.time.toDate().toLocaleString();
-        }
+/* 📊 LOAD FIREBASE DATA */
+function loadData(){
 
-        table.innerHTML += `
-            <tr>
-                <td>${d.name || ""}</td>
-                <td>${d.group || ""}</td>
-                <td>${pairText}</td>
-                <td>${d.conscious || ""}</td>
-                <td>${d.subconscious || ""}</td>
-                <td>${d.percent || 0}%</td>
-                <td>${timeText}</td>
-            </tr>
-        `;
+    const table = document.getElementById("data");
+
+    db.collection("thirdEyeResults")
+    .orderBy("time", "desc")
+    .onSnapshot(snapshot => {
+
+        table.innerHTML = "";
+
+        snapshot.forEach(doc => {
+            const d = doc.data();
+
+            const pairText = Array.isArray(d.pair)
+                ? d.pair.join(" vs ")
+                : "-";
+
+            let timeText = "-";
+
+            if(d.time?.seconds){
+                timeText = new Date(d.time.seconds * 1000).toLocaleString();
+            }
+
+            table.innerHTML += `
+                <tr>
+                    <td>${d.name || ""}</td>
+                    <td>${d.group || ""}</td>
+                    <td>${pairText}</td>
+                    <td>${d.result || d.subconscious || ""}</td>
+                    <td>${d.percent || 0}%</td>
+                    <td>${timeText}</td>
+                </tr>
+            `;
+        });
+
     });
-
-});
+}
 </script>
 
 </body>
