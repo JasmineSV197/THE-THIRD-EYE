@@ -44,13 +44,13 @@ tr:nth-child(even) { background: #1a1a1a; }
 
 <h1>👁️ THIRD EYE ADMIN PANEL</h1>
 
-<!-- 🔐 LOGIN -->
+<!-- LOGIN -->
 <div id="loginBox">
     <input type="password" id="pass" placeholder="Enter admin password">
-    <button onclick="login()">Enter</button>
+    <button id="loginBtn">Enter</button>
 </div>
 
-<!-- DATA TABLE -->
+<!-- PANEL -->
 <div id="panel" style="display:none;">
 <table>
     <thead>
@@ -68,14 +68,16 @@ tr:nth-child(even) { background: #1a1a1a; }
 </table>
 </div>
 
-<!-- FIREBASE -->
+<!-- FIREBASE (v8 compat) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-const ADMIN_PASS = "1997"; // 👈 CHANGE THIS PASSWORD
+/* 🔐 PASSWORD */
+const ADMIN_PASS = "1997";
 
-function login(){
+/* LOGIN */
+document.getElementById("loginBtn").onclick = function () {
     const val = document.getElementById("pass").value;
 
     if(val !== ADMIN_PASS){
@@ -87,9 +89,9 @@ function login(){
     document.getElementById("panel").style.display = "block";
 
     loadData();
-}
+};
 
-/* FIREBASE */
+/* FIREBASE CONFIG */
 const firebaseConfig = {
     apiKey: "YOUR_KEY",
     authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -104,30 +106,38 @@ const db = firebase.firestore();
 
 const table = document.getElementById("data");
 
+/* LOAD DATA REALTIME */
 function loadData(){
 
-db.collection("thirdEyeResults")
-.orderBy("time", "desc")
-.onSnapshot(snapshot => {
+    db.collection("thirdEyeResults")
+    .orderBy("time", "desc")
+    .onSnapshot(snapshot => {
 
-    table.innerHTML = "";
+        table.innerHTML = "";
 
-    snapshot.forEach(doc => {
-        const d = doc.data();
+        snapshot.forEach(doc => {
+            const d = doc.data();
 
-        table.innerHTML += `
-        <tr>
-            <td>${d.name || "-"}</td>
-            <td>${d.group || "-"}</td>
-            <td>${(d.pair || []).join(" vs ")}</td>
-            <td>${d.conscious || "-"}</td>
-            <td>${d.subconscious || "-"}</td>
-            <td>${d.percent || "-"}</td>
-            <td>${d.time?.toDate ? d.time.toDate().toLocaleString() : ""}</td>
-        </tr>`;
+            const time = d.time?.toDate
+                ? d.time.toDate().toLocaleString()
+                : "N/A";
+
+            table.innerHTML += `
+                <tr>
+                    <td>${d.name || "-"}</td>
+                    <td>${d.group || "-"}</td>
+                    <td>${(d.pair || []).join(" vs ")}</td>
+                    <td>${d.conscious || "-"}</td>
+                    <td>${d.subconscious || "-"}</td>
+                    <td>${d.percent || "-"}</td>
+                    <td>${time}</td>
+                </tr>
+            `;
+        });
+
+    }, (err) => {
+        console.log("Firestore error:", err);
     });
-
-});
 }
 </script>
 
