@@ -1,46 +1,101 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin Panel</title>
+    <title>THIRD EYE ADMIN</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0b0b0b;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00ffcc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #111;
+        }
+
+        tr:nth-child(even) {
+            background: #1a1a1a;
+        }
+    </style>
 </head>
+
 <body>
 
-<h1>Third Eye Results</h1>
-<div id="data"></div>
+<h1>👁️ THIRD EYE ADMIN PANEL</h1>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Pair</th>
+            <th>Conscious</th>
+            <th>Subconscious</th>
+            <th>%</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+
+    <tbody id="data"></tbody>
+</table>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
-firebase.initializeApp({
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
-});
+const firebaseConfig = {
+    apiKey: "YOUR_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "XXXX",
+    appId: "XXXX"
+};
 
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const box = document.getElementById("data");
+const table = document.getElementById("data");
 
-db.collection("thirdEyeResults").get().then(snapshot => {
+db.collection("thirdEyeResults")
+.orderBy("time", "desc")
+.onSnapshot(snapshot => {
+
+    table.innerHTML = "";
 
     snapshot.forEach(doc => {
-
         const d = doc.data();
 
-        const div = document.createElement("div");
-
-        div.innerHTML = `
-            <hr>
-            <b>Name:</b> ${d.name}<br>
-            <b>Group:</b> ${d.group}<br>
-            <b>Pair:</b> ${d.pair}<br>
-            <b>Conscious:</b> ${d.conscious}<br>
-            <b>Subconscious:</b> ${d.subconscious}<br>
-            <b>Percent:</b> ${d.percent}
+        table.innerHTML += `
+            <tr>
+                <td>${d.name}</td>
+                <td>${d.group}</td>
+                <td>${d.pair.join(" vs ")}</td>
+                <td>${d.conscious}</td>
+                <td>${d.subconscious}</td>
+                <td>${d.percent}%</td>
+                <td>${new Date(d.time.seconds * 1000).toLocaleString()}</td>
+            </tr>
         `;
-
-        box.appendChild(div);
     });
 
 });
