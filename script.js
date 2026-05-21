@@ -226,31 +226,51 @@ function showResult(){
     const indirect =
         score.A >= score.B ? selectedPair[0] : selectedPair[1];
 
-    const conscious = directChoice || "Not selected";
+    const conscious = directChoice || "Not chosen";
 
-    const statement =
+    let statement = "";
+
+    if(subconscious !== conscious){
+
+        statement =
 `${usernameInput.value}
 
-Conscious: ${conscious}
-Subconscious: ${subconscious} — ${percent}%`;
+Conscious Choice: ${conscious}
+Subconscious Preference: ${subconscious} — ${percent}%
+
+⚠️ Contradiction detected.`;
+
+    } else {
+
+        statement =
+`${usernameInput.value}
+
+Conscious Choice: ${conscious}
+Subconscious Preference: ${subconscious} — ${percent}%
+
+✔ Alignment detected.`;
+    }
 
     resultText.innerText = statement;
 
     extraResult.innerHTML = `
-        <b>Indirect Preference:</b> ${indirect}
+        <b>Most Indirectly Preferred:</b> ${indirect}
+        <br><b>Deep Match:</b> ${subconscious}
     `;
 
-    /* SAVE TO FIREBASE */
+    /* SAVE */
     saveToFirebase({
         name: usernameInput.value,
         group: selectedGroup,
         pair: selectedPair,
         conscious,
         subconscious,
+        indirect,
         percent,
         time: new Date()
     });
 }
+
 
 /* ================= RESTART ================= */
 restartBtn.onclick = () => {
