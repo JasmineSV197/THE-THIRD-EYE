@@ -126,6 +126,14 @@ const extraResult = document.getElementById("extraResult");
 
 const usernameInput = document.getElementById("username");
 const selectedGroupTitle = document.getElementById("selectedGroupTitle");
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const active = document.activeElement;
+        if (active && active.id === "username") {
+            startBtn.click();
+        }
+    }
+});
 
 /* ================= STATE ================= */
 let selectedGroup = "";
