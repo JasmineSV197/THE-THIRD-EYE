@@ -1,29 +1,24 @@
 /* ================= FIREBASE ================= */
-
 const firebaseConfig = {
-    apiKey: "YOUR_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "XXXX",
-    appId: "XXXX"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "the-third-eye-69578.firebaseapp.com",
+    projectId: "the-third-eye-69578",
+    storageBucket: "the-third-eye-69578.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* SAFE SAVE */
+/* SAVE FUNCTION */
 function saveToFirebase(data){
-    try {
-        db.collection("thirdEyeResults").add(data)
-        .catch(err => console.log("Firebase error:", err));
-    } catch (e) {
-        console.log("Firebase not ready:", e);
-    }
+    db.collection("thirdEyeResults").add(data)
+    .then(() => console.log("Saved ✔"))
+    .catch(err => console.log("Firebase error:", err));
 }
 
 /* ================= ELEMENTS ================= */
-
 const intro = document.getElementById("intro");
 const groupScreen = document.getElementById("groupScreen");
 const memberScreen = document.getElementById("memberScreen");
@@ -50,7 +45,6 @@ const usernameInput = document.getElementById("username");
 const selectedGroupTitle = document.getElementById("selectedGroupTitle");
 
 /* ================= DATA ================= */
-
 const groups = {
     BLACKPINK: {
         Lisa: { attractive:"Confident", comfort:"Funny", trust:"Honest", miss:"Energy", emotional:"Protective", lovable:"Chaotic", energy:"Fearless" },
@@ -58,7 +52,6 @@ const groups = {
         Rosé: { attractive:"Gentle", comfort:"Sweet", trust:"Sensitive", miss:"Emotion", emotional:"Soft", lovable:"Cute", energy:"Dreamy" },
         Jisoo: { attractive:"Calm", comfort:"Stable", trust:"Loyal", miss:"Presence", emotional:"Safe", lovable:"Funny calm", energy:"Balanced" }
     },
-
     BTS: {
         Jungkook: { attractive:"Intense", comfort:"Playful", trust:"Loyal", miss:"Attention", emotional:"Deep", lovable:"Sweet chaos", energy:"Passionate" },
         V: { attractive:"Artistic", comfort:"Calm", trust:"Gentle", miss:"Presence", emotional:"Soft", lovable:"Cute strange", energy:"Dreamy" },
@@ -71,15 +64,13 @@ const groups = {
 };
 
 /* ================= STATE ================= */
-
 let selectedGroup = "";
 let selectedPair = [];
 let currentQuestion = 0;
-let score = { A: 0, B: 0 };
+let score = {A:0,B:0};
 let directChoice = "";
 
 /* ================= SCREEN SWITCH ================= */
-
 function showScreen(screen){
     [intro, groupScreen, memberScreen, quiz, loading, result]
         .forEach(s => s.classList.remove("active"));
@@ -87,19 +78,16 @@ function showScreen(screen){
 }
 
 /* ================= START ================= */
-
 startBtn.onclick = () => {
     if(!usernameInput.value.trim()){
         alert("Enter name");
         return;
     }
-
     generateGroups();
     showScreen(groupScreen);
 };
 
 /* ================= GROUPS ================= */
-
 function generateGroups(){
     groupButtons.innerHTML = "";
 
@@ -122,37 +110,29 @@ function generateGroups(){
 }
 
 /* ================= GROUP CONTINUE ================= */
-
 groupContinueBtn.onclick = () => {
     if(!selectedGroup) return alert("Choose group");
     showMemberScreen();
 };
 
 /* ================= MEMBER SCREEN ================= */
-
 function showMemberScreen(){
     showScreen(memberScreen);
 
     selectedGroupTitle.innerText = selectedGroup;
-
     memberButtons.innerHTML = "";
     selectedPair = [];
 
     Object.keys(groups[selectedGroup]).forEach(name => {
-
         const div = document.createElement("div");
         div.className = "pairOption";
         div.innerText = name;
 
         div.onclick = () => {
-
             if(selectedPair.includes(name)){
                 selectedPair = selectedPair.filter(n => n !== name);
                 div.classList.remove("selected");
-                return;
-            }
-
-            if(selectedPair.length < 2){
+            } else if(selectedPair.length < 2){
                 selectedPair.push(name);
                 div.classList.add("selected");
             }
@@ -163,7 +143,6 @@ function showMemberScreen(){
 }
 
 /* ================= CONTINUE ================= */
-
 memberContinueBtn.onclick = () => {
     if(selectedPair.length !== 2){
         alert("Choose 2 members");
@@ -179,7 +158,6 @@ memberContinueBtn.onclick = () => {
 };
 
 /* ================= QUESTIONS ================= */
-
 function getQuestions(){
     const A = groups[selectedGroup][selectedPair[0]];
     const B = groups[selectedGroup][selectedPair[1]];
@@ -200,22 +178,18 @@ function getQuestions(){
 }
 
 /* ================= LOAD ================= */
-
 function loadQuestion(){
-
     const q = getQuestions()[currentQuestion];
     questionText.innerText = q.q;
 
     options.innerHTML = "";
 
-    q.a.sort(() => Math.random() - 0.5).forEach(ans => {
-
+    q.a.forEach(ans => {
         const div = document.createElement("div");
         div.className = "option";
         div.innerText = ans.t;
 
         div.onclick = () => {
-
             if(ans.v === "A") score.A++;
             if(ans.v === "B") score.B++;
 
@@ -224,11 +198,8 @@ function loadQuestion(){
 
             currentQuestion++;
 
-            if(currentQuestion < 8){
-                loadQuestion();
-            } else {
-                analyze();
-            }
+            if(currentQuestion < 8) loadQuestion();
+            else analyze();
         };
 
         options.appendChild(div);
@@ -236,14 +207,12 @@ function loadQuestion(){
 }
 
 /* ================= ANALYZE ================= */
-
 function analyze(){
     showScreen(loading);
     setTimeout(showResult, 2000);
 }
 
 /* ================= RESULT ================= */
-
 function showResult(){
 
     showScreen(result);
@@ -257,53 +226,33 @@ function showResult(){
     const indirect =
         score.A >= score.B ? selectedPair[0] : selectedPair[1];
 
-    const conscious = directChoice || "Not chosen";
+    const conscious = directChoice || "Not selected";
 
-    let statement = "";
-
-    if(subconscious !== conscious){
-
-        statement =
+    const statement =
 `${usernameInput.value}
 
-Conscious Choice: ${conscious}
-Subconscious Preference: ${subconscious} — ${percent}%
-
-⚠️ Contradiction detected.`;
-
-    } else {
-
-        statement =
-`${usernameInput.value}
-
-Conscious Choice: ${conscious}
-Subconscious Preference: ${subconscious} — ${percent}%
-
-✔ Alignment detected.`;
-    }
+Conscious: ${conscious}
+Subconscious: ${subconscious} — ${percent}%`;
 
     resultText.innerText = statement;
 
     extraResult.innerHTML = `
-        <b>Most Indirectly Preferred:</b> ${indirect}
-        <br><b>Deep Match:</b> ${subconscious}
+        <b>Indirect Preference:</b> ${indirect}
     `;
 
-    /* SAVE */
+    /* SAVE TO FIREBASE */
     saveToFirebase({
         name: usernameInput.value,
         group: selectedGroup,
         pair: selectedPair,
         conscious,
         subconscious,
-        indirect,
         percent,
         time: new Date()
     });
 }
 
 /* ================= RESTART ================= */
-
 restartBtn.onclick = () => {
     selectedGroup = "";
     selectedPair = [];
